@@ -1,4 +1,4 @@
-import 'package:expense_manager/screens/signup_screen.dart';
+import 'package:expense_manager/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
