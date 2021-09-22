@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -59,32 +60,23 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     if (!_initialized) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: const Center(
+      return const Scaffold(
+        body: Center(
           child: CircularProgressIndicator(),
         ),
       );
     }
 
     if (_error) {
-      Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: const Center(
+      const Scaffold(
+        body: Center(
           child: Text("Firebase Error"),
         ),
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: const Login(),
+    return const Scaffold(
+      body: Login(),
     );
   }
 }

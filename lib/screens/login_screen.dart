@@ -1,3 +1,4 @@
+import 'package:expense_manager/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -27,48 +28,29 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 200.0),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-              ),
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.mail_outline),
+    return Container(
+      decoration: kAppBackgroundThemeBox,
+      child: SingleChildScrollView(
+        child: DefaultTabController(
+          initialIndex: 0,
+          length: 2,
+          child: TabBar(
+            padding: const EdgeInsets.only(top: 90.0),
+            tabs: [
+              Container(
+                decoration: const BoxDecoration(),
+                alignment: Alignment.topLeft,
+                child: const Text(
+                  'Log in',
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                controller: passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.password_outlined),
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  signIn(emailController.text, passwordController.text);
-                },
-                child: const Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(letterSpacing: 1.2),
-                  ),
+              Container(
+                decoration: const BoxDecoration(),
+                alignment: Alignment.topLeft,
+                child: const Text(
+                  'Register',
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
             ],
