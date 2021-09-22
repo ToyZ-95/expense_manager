@@ -31,34 +31,27 @@ class _LoginState extends State<Login> {
     return Container(
       padding: const EdgeInsets.only(top: 24.0, left: 16.0, right: 16.0),
       decoration: kAppBackgroundThemeBox,
-      child: SingleChildScrollView(
+      child: const SingleChildScrollView(
         child: DefaultTabController(
           initialIndex: 0,
           length: 2,
           child: TabBar(
-            indicatorColor: Colors.transparent,
-            labelStyle: const TextStyle(
-              color: Color(0xFF3962F2),
-              fontSize: 24.0,
+            indicatorColor: Colors.blue,
+            labelColor: Color(0xFF3962F2),
+            labelStyle: TextStyle(
+              fontSize: 20.0,
             ),
             indicatorSize: TabBarIndicatorSize.label,
-            padding: const EdgeInsets.only(top: 90.0),
+            padding: EdgeInsets.only(top: 90.0),
             tabs: [
-              Container(
-                decoration: const BoxDecoration(),
-                alignment: Alignment.topLeft,
-                child: const Text(
-                  'Log in',
-                  style: TextStyle(color: Colors.black),
+              Tab(
+                text: 'Log in',
+                child: Container(
+                  margin: EdgeInsets.only(right: 100.0),
                 ),
               ),
-              Container(
-                decoration: const BoxDecoration(),
-                alignment: Alignment.topLeft,
-                child: const Text(
-                  'Register',
-                  style: TextStyle(color: Colors.black),
-                ),
+              Tab(
+                text: 'Register',
               ),
             ],
           ),
