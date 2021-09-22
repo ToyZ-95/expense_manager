@@ -29,12 +29,19 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(top: 24.0, left: 16.0, right: 16.0),
       decoration: kAppBackgroundThemeBox,
       child: SingleChildScrollView(
         child: DefaultTabController(
           initialIndex: 0,
           length: 2,
           child: TabBar(
+            indicatorColor: Colors.transparent,
+            labelStyle: const TextStyle(
+              color: Color(0xFF3962F2),
+              fontSize: 24.0,
+            ),
+            indicatorSize: TabBarIndicatorSize.label,
             padding: const EdgeInsets.only(top: 90.0),
             tabs: [
               Container(
