@@ -1,6 +1,8 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
@@ -41,7 +43,7 @@ class _LoginState extends State<Login> {
                 margin: const EdgeInsets.only(right: 110),
                 child: const TabBar(
                   indicatorColor: Colors.transparent,
-                  unselectedLabelColor: Color(0xFFcdcdcd),
+                  unselectedLabelColor: Color(0xFF9ba5f8),
                   labelColor: Color(0xFF1441F1),
                   labelStyle: TextStyle(
                     fontSize: 20.0,
@@ -74,8 +76,9 @@ class _LoginState extends State<Login> {
                 child: TabBarView(
                   children: [
                     Column(
-                      children: const [
-                        TextField(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const TextField(
                           style: TextStyle(
                             color: Color(0xFF1441F1),
                             fontWeight: FontWeight.bold,
@@ -83,12 +86,15 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                             labelText: 'E-mail',
                             labelStyle: TextStyle(
-                              color: Color(0xFFcdcdcd),
+                              color: Color(0xFF9ba5f8),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        TextField(
+                        const SizedBox(
+                          height: 40.0,
+                        ),
+                        const TextField(
                           style: TextStyle(
                             color: Color(0xFF1441F1),
                             fontWeight: FontWeight.bold,
@@ -96,16 +102,50 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                             labelText: 'Password',
                             labelStyle: TextStyle(
-                              color: Color(0xFFcdcdcd),
+                              color: Color(0xFF9ba5f8),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           obscureText: true,
                         ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: const Text(
+                            'Forgot Password',
+                            style: TextStyle(
+                              color: Color(0xFF9ba5f8),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height - 600,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            primary: const Color(0xFF1441F1),
+                          ),
+                          child: Container(
+                            // decoration: const BoxDecoration(
+                            //   borderRadius: BorderRadius.all(
+                            //     Radius.circular(100.0),
+                            //   ),
+                            // ),
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width,
+                            height: 50.0,
+                            child: const Text('Log In'),
+                          ),
+                        ),
                       ],
                     ),
                     Column(
-                      children: [Text('Register Page')],
+                      children: const [Text('Register Page')],
                     ),
                   ],
                 ),
