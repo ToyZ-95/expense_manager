@@ -30,7 +30,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 35.0),
       decoration: kAppBackgroundThemeBox,
       child: SingleChildScrollView(
         child: DefaultTabController(
@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
                 margin: const EdgeInsets.only(right: 110),
                 child: const TabBar(
                   indicatorColor: Colors.transparent,
-                  unselectedLabelColor: Color(0xFF949FF8),
+                  unselectedLabelColor: Color(0xFFcdcdcd),
                   labelColor: Color(0xFF1441F1),
                   labelStyle: TextStyle(
                     fontSize: 20.0,
@@ -76,14 +76,31 @@ class _LoginState extends State<Login> {
                     Column(
                       children: const [
                         TextField(
+                          style: TextStyle(
+                            color: Color(0xFF1441F1),
+                            fontWeight: FontWeight.bold,
+                          ),
                           decoration: InputDecoration(
-                            labelText: 'Email',
+                            labelText: 'E-mail',
+                            labelStyle: TextStyle(
+                              color: Color(0xFFcdcdcd),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         TextField(
+                          style: TextStyle(
+                            color: Color(0xFF1441F1),
+                            fontWeight: FontWeight.bold,
+                          ),
                           decoration: InputDecoration(
                             labelText: 'Password',
+                            labelStyle: TextStyle(
+                              color: Color(0xFFcdcdcd),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
+                          obscureText: true,
                         ),
                       ],
                     ),
