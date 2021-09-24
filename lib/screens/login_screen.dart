@@ -1,9 +1,10 @@
 import 'package:expense_manager/constants/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:expense_manager/services/firebase_auth.dart';
+import 'package:expense_manager/widgets/custom_elevated_button.dart';
+import 'package:expense_manager/widgets/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,28 +14,24 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController signInEmailTextFieldController =
+      TextEditingController();
+  TextEditingController signInPasswordTextFieldController =
+      TextEditingController();
 
-  signIn(String email, String password) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-    }
-  }
+  TextEditingController registerEmailTextFieldController =
+      TextEditingController();
+  TextEditingController registerPasswordTextFieldController =
+      TextEditingController();
+  TextEditingController registerConfirmPasswordTextFieldController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 35.0),
-      decoration: kAppBackgroundThemeBox,
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 35.0),
+        decoration: kAppBackgroundThemeBox,
         child: DefaultTabController(
           length: 2,
           child: Column(
@@ -70,43 +67,26 @@ class _LoginState extends State<Login> {
               ),
               Container(
                 //Add this to give height
-
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height - 90.0,
                 padding: const EdgeInsets.only(top: 90),
                 child: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const TextField(
-                          style: TextStyle(
-                            color: Color(0xFF1441F1),
-                            fontWeight: FontWeight.bold,
-                          ),
-                          decoration: InputDecoration(
-                            labelText: 'E-mail',
-                            labelStyle: TextStyle(
-                              color: Color(0xFF9ba5f8),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        CustomTextField(
+                          label: 'E-mail',
+                          textFieldontroller: signInEmailTextFieldController,
+                          obsecure: false,
                         ),
                         const SizedBox(
                           height: 40.0,
                         ),
-                        const TextField(
-                          style: TextStyle(
-                            color: Color(0xFF1441F1),
-                            fontWeight: FontWeight.bold,
-                          ),
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            labelStyle: TextStyle(
-                              color: Color(0xFF9ba5f8),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          obscureText: true,
+                        CustomTextField(
+                          label: 'Password',
+                          textFieldontroller: signInPasswordTextFieldController,
+                          obsecure: true,
                         ),
                         const SizedBox(
                           height: 10.0,
@@ -121,31 +101,51 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height - 600,
+                        const SizedBox(
+                          height: 50.0,
                         ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            primary: const Color(0xFF1441F1),
-                          ),
-                          child: Container(
-                            // decoration: const BoxDecoration(
-                            //   borderRadius: BorderRadius.all(
-                            //     Radius.circular(100.0),
-                            //   ),
-                            // ),
-                            alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width,
-                            height: 50.0,
-                            child: const Text('Log In'),
-                          ),
-                        ),
+                        CustomElevatedButton(
+                            title: 'Log In',
+                            onPressed: () {
+                              signIn(signInEmailTextFieldController.text,
+                                  signInPasswordTextFieldController.text);
+                            }),
                       ],
                     ),
                     Column(
-                      children: const [Text('Register Page')],
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        CustomTextField(
+                          label: 'E-mail',
+                          textFieldontroller: registerEmailTextFieldController,
+                          obsecure: false,
+                        ),
+                        const SizedBox(
+                          height: 40.0,
+                        ),
+                        CustomTextField(
+                          label: 'Set Password',
+                          textFieldontroller:
+                              registerPasswordTextFieldController,
+                          obsecure: true,
+                        ),
+                        const SizedBox(
+                          height: 40.0,
+                        ),
+                        CustomTextField(
+                          label: 'Confirm Password',
+                          textFieldontroller:
+                              registerConfirmPasswordTextFieldController,
+                          obsecure: true,
+                        ),
+                        const SizedBox(
+                          height: 50.0,
+                        ),
+                        CustomElevatedButton(
+                          title: 'Register',
+                          onPressed: () {},
+                        ),
+                      ],
                     ),
                   ],
                 ),
