@@ -28,7 +28,31 @@ class Home extends StatelessWidget {
             ),
           ),
         ),
-        const Text('Add Expenses'),
+        const SizedBox(
+          height: 60.0,
+        ),
+        Column(
+          children: [
+            FloatingActionButton(
+              onPressed: () {},
+              backgroundColor: const Color(0xFF1441F1),
+              child: const Icon(
+                Icons.add,
+              ),
+            ),
+            const SizedBox(
+              height: 18.0,
+            ),
+            const Text(
+              'Add Expense',
+              textScaleFactor: 1.2,
+              style: TextStyle(
+                color: Color(0xFF1441F1),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

@@ -10,7 +10,7 @@ class MonthsCardModel {
 
 List<MonthsCardModel> _monthsCardModel = [
   MonthsCardModel(
-      monthName: 'September', budget: 60000.0, expense: 40000.0, year: 2019),
+      monthName: 'September', budget: 60000.0, expense: 20000.0, year: 2019),
   MonthsCardModel(
       monthName: 'October', budget: 60000.0, expense: 10000.0, year: 2019),
   MonthsCardModel(

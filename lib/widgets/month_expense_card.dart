@@ -1,5 +1,7 @@
 import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/widgets/indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomeExpenseCard extends StatelessWidget {
@@ -7,8 +9,18 @@ class HomeExpenseCard extends StatelessWidget {
 
   HomeExpenseCard({required this.monthsCardModel});
 
+  late String remaining;
+  late String expense;
+
   @override
   Widget build(BuildContext context) {
+    remaining = (monthsCardModel.expense! * 100 / monthsCardModel.budget!)
+        .toStringAsFixed(2);
+
+    expense = (((monthsCardModel.budget! - monthsCardModel.expense!) * 100) /
+            monthsCardModel.budget!)
+        .toStringAsFixed(2);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
@@ -38,7 +50,7 @@ class HomeExpenseCard extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       width: MediaQuery.of(context).size.width - 10,
-      height: MediaQuery.of(context).size.height / 2 - 50.0,
+      height: MediaQuery.of(context).size.height / 2 + 50.0,
       padding: const EdgeInsetsDirectional.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,23 +77,29 @@ class HomeExpenseCard extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 20.0,
+            height: 8.0,
           ),
           Expanded(
             child: PieChart(
               PieChartData(
-                centerSpaceRadius: 32.0,
+                centerSpaceRadius: 50.0,
                 // read about it in the PieChartData section
                 sections: [
                   PieChartSectionData(
-                    value: monthsCardModel.expense!,
-                    color: const Color(0xFF9ba5f8),
-                  ),
-                  PieChartSectionData(
-                    value: monthsCardModel.budget!,
+                    value: double.parse(remaining),
                     color: const Color(0xFF1441F1),
+                    title: remaining + '%',
                     titleStyle: const TextStyle(
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  PieChartSectionData(
+                    value: double.parse(expense),
+                    title: expense + '%',
+                    color: const Color(0xFF9ba5f8),
+                    titleStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
@@ -90,6 +108,30 @@ class HomeExpenseCard extends StatelessWidget {
                   const Duration(milliseconds: 150), // Optional
               swapAnimationCurve: Curves.linear, // Optional
             ),
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Indicator(
+                color: Color(0xFF1441F1),
+                text: 'Remaining',
+                isSquare: true,
+              ),
+              SizedBox(
+                width: 8.0,
+              ),
+              Indicator(
+                color: Color(0xFF9ba5f8),
+                text: 'Expense',
+                isSquare: true,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10.0,
           ),
           // Row(
           //   mainAxisAlignment: MainAxisAlignment.center,
@@ -129,9 +171,23 @@ class HomeExpenseCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
+              OutlinedButton(
                 onPressed: () {},
-                child: Text('Edit Budget'),
+                child: const Text(
+                  'Edit Budget',
+                  style: TextStyle(
+                    color: Color(0xFF1441F1),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(
+                    color: Color(0xFF9ba5f8),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
               ),
             ],
           ),
