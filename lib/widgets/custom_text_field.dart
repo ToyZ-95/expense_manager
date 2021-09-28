@@ -1,3 +1,4 @@
+import 'package:expense_manager/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -15,23 +16,23 @@ class CustomTextField extends StatelessWidget {
       obscureText: obsecure,
       controller: textFieldontroller,
       style: const TextStyle(
-        color: Color(0xFF1441F1),
+        color: kPrimaryColor,
         fontWeight: FontWeight.bold,
       ),
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(
-          color: Color(0xFF9ba5f8),
+          color: kSecondaryColor,
           fontWeight: FontWeight.bold,
         ),
         focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xFF1441F1),
+            color: kPrimaryColor,
           ),
         ),
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xFF9ba5f8),
+            color: kSecondaryColor,
           ),
         ),
       ),

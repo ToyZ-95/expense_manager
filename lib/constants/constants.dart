@@ -8,3 +8,6 @@ const BoxDecoration kAppBackgroundThemeBox = BoxDecoration(
     end: Alignment.bottomCenter,
   ),
 );
+
+const Color kPrimaryColor = Color(0xFF1441F1);
+const Color kSecondaryColor = Color(0xFF9ba5f8);

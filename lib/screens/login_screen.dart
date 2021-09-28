@@ -40,8 +40,8 @@ class _LoginState extends State<Login> {
                 margin: const EdgeInsets.only(right: 110),
                 child: const TabBar(
                   indicatorColor: Colors.transparent,
-                  unselectedLabelColor: Color(0xFF9ba5f8),
-                  labelColor: Color(0xFF1441F1),
+                  unselectedLabelColor: kSecondaryColor,
+                  labelColor: kPrimaryColor,
                   labelStyle: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w500,
@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                           child: const Text(
                             'Forgot Password',
                             style: TextStyle(
-                              color: Color(0xFF9ba5f8),
+                              color: kSecondaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

@@ -1,3 +1,5 @@
+import 'package:expense_manager/constants/constants.dart';
+import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/widgets/indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -14,12 +16,17 @@ class HomeExpenseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    remaining = (monthsCardModel.expense! * 100 / monthsCardModel.budget!)
-        .toStringAsFixed(2);
+    double expenses = 0.0;
 
-    expense = (((monthsCardModel.budget! - monthsCardModel.expense!) * 100) /
-            monthsCardModel.budget!)
-        .toStringAsFixed(2);
+    for (ExpenseModel item in monthsCardModel.expenses!) {
+      expenses += item.amount!;
+    }
+
+    remaining = (expenses * 100 / monthsCardModel.budget!).toStringAsFixed(2);
+
+    expense =
+        (((monthsCardModel.budget! - expenses) * 100) / monthsCardModel.budget!)
+            .toStringAsFixed(2);
 
     return Container(
       decoration: BoxDecoration(
@@ -62,7 +69,7 @@ class HomeExpenseCard extends StatelessWidget {
               letterSpacing: 1.2,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1441F1),
+              color: kPrimaryColor,
             ),
           ),
           const SizedBox(
@@ -73,7 +80,7 @@ class HomeExpenseCard extends StatelessWidget {
             textScaleFactor: 1.2,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: Color(0xFF9ba5f8),
+              color: kSecondaryColor,
             ),
           ),
           const SizedBox(
@@ -87,7 +94,7 @@ class HomeExpenseCard extends StatelessWidget {
                 sections: [
                   PieChartSectionData(
                     value: double.parse(remaining),
-                    color: const Color(0xFF1441F1),
+                    color: kPrimaryColor,
                     title: remaining + '%',
                     titleStyle: const TextStyle(
                       color: Colors.white,
@@ -97,7 +104,7 @@ class HomeExpenseCard extends StatelessWidget {
                   PieChartSectionData(
                     value: double.parse(expense),
                     title: expense + '%',
-                    color: const Color(0xFF9ba5f8),
+                    color: kSecondaryColor,
                     titleStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -116,7 +123,7 @@ class HomeExpenseCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
               Indicator(
-                color: Color(0xFF1441F1),
+                color: kPrimaryColor,
                 text: 'Remaining',
                 isSquare: true,
               ),
@@ -124,7 +131,7 @@ class HomeExpenseCard extends StatelessWidget {
                 width: 8.0,
               ),
               Indicator(
-                color: Color(0xFF9ba5f8),
+                color: kSecondaryColor,
                 text: 'Expense',
                 isSquare: true,
               ),
@@ -176,13 +183,13 @@ class HomeExpenseCard extends StatelessWidget {
                 child: const Text(
                   'Edit Budget',
                   style: TextStyle(
-                    color: Color(0xFF1441F1),
+                    color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(
-                    color: Color(0xFF9ba5f8),
+                    color: kSecondaryColor,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),

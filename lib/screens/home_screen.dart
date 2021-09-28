@@ -1,3 +1,4 @@
+import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/widgets/home.dart';
 import 'package:flutter/material.dart';
 
@@ -38,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color(0xFF1441F1),
-        unselectedItemColor: const Color(0xFF9ba5f8),
+        selectedItemColor: kPrimaryColor,
+        unselectedItemColor: kSecondaryColor,
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
         items: const [

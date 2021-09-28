@@ -1,3 +1,4 @@
+import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/widgets/month_expense_card.dart';
@@ -5,26 +6,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
-  HomeController controller = Get.put(HomeController());
+  HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          margin: const EdgeInsets.only(top: 50.0),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: GetMonthsCard()
-                  .map(
-                    (e) => HomeExpenseCard(
-                      monthsCardModel: e,
-                    ),
-                  )
-                  .toList(),
+        Obx(
+          () => Container(
+            margin: const EdgeInsets.only(top: 50.0),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: homeController.monthsCards
+                    .map(
+                      (e) => HomeExpenseCard(
+                        monthsCardModel: e,
+                      ),
+                    )
+                    .toList(),
+              ),
             ),
           ),
         ),
@@ -35,7 +38,7 @@ class Home extends StatelessWidget {
           children: [
             FloatingActionButton(
               onPressed: () {},
-              backgroundColor: const Color(0xFF1441F1),
+              backgroundColor: kPrimaryColor,
               child: const Icon(
                 Icons.add,
               ),
@@ -47,7 +50,7 @@ class Home extends StatelessWidget {
               'Add Expense',
               textScaleFactor: 1.2,
               style: TextStyle(
-                color: Color(0xFF1441F1),
+                color: kPrimaryColor,
                 fontWeight: FontWeight.bold,
               ),
             ),
