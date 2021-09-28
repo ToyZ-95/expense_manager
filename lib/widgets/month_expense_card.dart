@@ -11,22 +11,25 @@ class HomeExpenseCard extends StatelessWidget {
 
   HomeExpenseCard({required this.monthsCardModel});
 
-  late String remaining;
-  late String expense;
+  late String remainingPercent;
+  late String expensePercent;
 
   @override
   Widget build(BuildContext context) {
-    double expenses = 0.0;
+    double remainingNum = 0.0;
+    double expensesNum = 0.0;
 
     for (ExpenseModel item in monthsCardModel.expenses!) {
-      expenses += item.amount!;
+      expensesNum += item.amount!;
     }
 
-    remaining = (expenses * 100 / monthsCardModel.budget!).toStringAsFixed(2);
+    remainingNum = monthsCardModel.budget! - expensesNum;
 
-    expense =
-        (((monthsCardModel.budget! - expenses) * 100) / monthsCardModel.budget!)
-            .toStringAsFixed(2);
+    expensePercent =
+        (expensesNum * 100 / monthsCardModel.budget!).toStringAsFixed(2);
+
+    remainingPercent =
+        ((remainingNum * 100) / monthsCardModel.budget!).toStringAsFixed(2);
 
     return Container(
       decoration: BoxDecoration(
@@ -93,17 +96,17 @@ class HomeExpenseCard extends StatelessWidget {
                 // read about it in the PieChartData section
                 sections: [
                   PieChartSectionData(
-                    value: double.parse(remaining),
+                    value: double.parse(remainingPercent),
                     color: kPrimaryColor,
-                    title: remaining + '%',
+                    title: remainingPercent + '%',
                     titleStyle: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   PieChartSectionData(
-                    value: double.parse(expense),
-                    title: expense + '%',
+                    value: double.parse(expensePercent),
+                    title: expensePercent + '%',
                     color: kSecondaryColor,
                     titleStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
