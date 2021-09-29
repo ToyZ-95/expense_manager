@@ -1,6 +1,8 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
+import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/screens/add_expense_screen.dart';
 import 'package:expense_manager/widgets/month_expense_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +39,9 @@ class Home extends StatelessWidget {
         Column(
           children: [
             FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(AddExpense());
+              },
               backgroundColor: kPrimaryColor,
               child: const Icon(
                 Icons.add,
