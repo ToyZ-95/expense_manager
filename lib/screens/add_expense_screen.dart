@@ -1,12 +1,16 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class AddExpense extends StatelessWidget {
   TextEditingController textEditingController = TextEditingController();
+  final DateFormat formatter = DateFormat('EEEE, d MMMM');
 
   @override
   Widget build(BuildContext context) {
+    String dateTime = formatter.format(DateTime.now());
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -93,10 +97,10 @@ class AddExpense extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Text(
-                        'DateTime Here',
+                      Text(
+                        dateTime,
                         textScaleFactor: 1.2,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: kPrimaryColor,
                         ),
@@ -104,7 +108,10 @@ class AddExpense extends StatelessWidget {
                       const Spacer(),
                       IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.calendar_today_rounded),
+                        icon: const Icon(
+                          Icons.calendar_today_rounded,
+                          color: kSecondaryColor,
+                        ),
                       ),
                     ],
                   ),
