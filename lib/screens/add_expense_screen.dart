@@ -181,7 +181,13 @@ class AddExpense extends StatelessWidget {
                         minimumSize:
                             Size(MediaQuery.of(context).size.width, 50),
                       ),
-                      child: const Text('Add'),
+                      child: const Text(
+                        'Add',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ],
