@@ -1,5 +1,6 @@
-import 'package:expense_manager/screens/home_screen.dart';
 import 'package:expense_manager/screens/login_screen.dart';
+import 'package:expense_manager/widgets/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,17 +23,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: GoogleFonts.mulish().fontFamily,
       ),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: const HomeScreen(),
+      home: MyHomePage(),
+      //home: const HomeScreen(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -73,11 +70,15 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     if (_error) {
-      const Scaffold(
+      return const Scaffold(
         body: Center(
           child: Text("Firebase Error"),
         ),
       );
+    }
+
+    if (FirebaseAuth.instance.currentUser != null) {
+      return Home();
     }
 
     return const Scaffold(

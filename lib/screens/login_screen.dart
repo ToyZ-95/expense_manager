@@ -143,7 +143,10 @@ class _LoginState extends State<Login> {
                         ),
                         CustomElevatedButton(
                           title: 'Register',
-                          onPressed: () {},
+                          onPressed: () {
+                            signUp(registerEmailTextFieldController.text,
+                                registerPasswordTextFieldController.text);
+                          },
                         ),
                       ],
                     ),
