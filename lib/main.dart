@@ -1,3 +1,4 @@
+import 'package:expense_manager/screens/home_screen.dart';
 import 'package:expense_manager/screens/login_screen.dart';
 import 'package:expense_manager/widgets/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -78,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     if (FirebaseAuth.instance.currentUser != null) {
-      return Home();
+      return const HomeScreen();
     }
 
     return const Scaffold(

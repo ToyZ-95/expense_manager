@@ -1,5 +1,5 @@
 import 'package:expense_manager/constants/constants.dart';
-import 'package:expense_manager/services/firebase_auth.dart';
+import 'package:expense_manager/services/auth_service.dart';
 import 'package:expense_manager/widgets/custom_elevated_button.dart';
 import 'package:expense_manager/widgets/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -107,7 +107,8 @@ class _LoginState extends State<Login> {
                         CustomElevatedButton(
                             title: 'Log In',
                             onPressed: () {
-                              signIn(signInEmailTextFieldController.text,
+                              AuthService.signIn(
+                                  signInEmailTextFieldController.text,
                                   signInPasswordTextFieldController.text);
                             }),
                       ],
@@ -144,7 +145,8 @@ class _LoginState extends State<Login> {
                         CustomElevatedButton(
                           title: 'Register',
                           onPressed: () {
-                            signUp(registerEmailTextFieldController.text,
+                            AuthService.signUp(
+                                registerEmailTextFieldController.text,
                                 registerPasswordTextFieldController.text);
                           },
                         ),

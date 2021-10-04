@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/widgets/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,6 +35,30 @@ class _HomeScreenState extends State<HomeScreen> {
       'Index 4: School',
     ),
   ];
+
+  Future<void> addUser() async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    if (FirebaseAuth.instance.currentUser != null) {
+      // Call the user's CollectionReference to add a new user
+
+      var data = users.get();
+
+      users
+          .add({
+            'Email': FirebaseAuth.instance.currentUser!.email,
+          })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
+  }
+
+  @override
+  void initState() {
+    // Create a CollectionReference called users that references the firestore collection
+    addUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

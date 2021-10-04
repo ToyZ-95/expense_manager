@@ -4,6 +4,12 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   List<MonthsCardModel> monthsCards = GetMonthsCard().obs;
 
+  @override
+  void onInit() {
+    // called immediately after the widget is allocated memory
+    super.onInit();
+  }
+
   void addMonthsCard(MonthsCardModel monthsCardModel) =>
       monthsCards.add(monthsCardModel);
 
