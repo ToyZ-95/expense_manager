@@ -2,7 +2,7 @@ import 'package:expense_manager/models/expense_model.dart';
 
 class MonthsCardModel {
   String? monthName;
-  int? year;
+  String? year;
   double? budget;
   List<ExpenseModel>? expenses;
 
@@ -17,11 +17,11 @@ class MonthsCardModel {
 List<MonthsCardModel> _monthsCardModel = [
   MonthsCardModel(
     monthName: 'September',
-    budget: 60000.0,
-    year: 2019,
+    budget: 6000.0,
+    year: '2019',
     expenses: <ExpenseModel>[
-      ExpenseModel(expenseName: 'Video Game', amount: 100.0),
-      ExpenseModel(expenseName: 'Food', amount: 150.0),
+      ExpenseModel(expenseName: 'Video Game', amount: 2000.0),
+      ExpenseModel(expenseName: 'Food', amount: 1000.0),
       ExpenseModel(expenseName: 'Entertainment', amount: 500.0),
       ExpenseModel(expenseName: 'Rent', amount: 900.0),
       ExpenseModel(expenseName: 'Clothes', amount: 1000.0),
@@ -30,7 +30,7 @@ List<MonthsCardModel> _monthsCardModel = [
   MonthsCardModel(
     monthName: 'October',
     budget: 60000.0,
-    year: 2019,
+    year: '2019',
     expenses: <ExpenseModel>[
       ExpenseModel(expenseName: 'Food', amount: 463.0),
       ExpenseModel(expenseName: 'Entertainment', amount: 234.0),
@@ -42,7 +42,7 @@ List<MonthsCardModel> _monthsCardModel = [
   MonthsCardModel(
     monthName: 'November',
     budget: 90000.0,
-    year: 2019,
+    year: '2019',
     expenses: <ExpenseModel>[
       ExpenseModel(expenseName: 'Video Game', amount: 345.0),
       ExpenseModel(expenseName: 'Entertainment', amount: 685.0),
@@ -54,7 +54,7 @@ List<MonthsCardModel> _monthsCardModel = [
   MonthsCardModel(
     monthName: 'December',
     budget: 100000.0,
-    year: 2019,
+    year: '2019',
     expenses: <ExpenseModel>[
       ExpenseModel(expenseName: 'Entertainment', amount: 678.0),
       ExpenseModel(expenseName: 'Video Game', amount: 5756.0),

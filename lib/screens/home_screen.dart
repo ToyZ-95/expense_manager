@@ -51,15 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   print(doc["Email"]);
                 })
               });
-
-      // var data = users
-      //     .doc(creds!.email)
-      //     .get()
-      //     .then((DocumentSnapshot documentSnapshot) {
-      //   if (documentSnapshot.exists) {
-      //     print('Document exists on the database');
-      //   }
-      // });
     }
   }
 

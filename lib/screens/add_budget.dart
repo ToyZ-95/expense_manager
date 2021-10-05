@@ -1,13 +1,17 @@
 import 'package:expense_manager/constants/constants.dart';
+import 'package:expense_manager/controllers/home_controller.dart';
+import 'package:expense_manager/models/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class AddExpense extends StatelessWidget {
+class AddBudget extends StatelessWidget {
   TextEditingController amountController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
-  final DateFormat formatter = DateFormat('EEEE, d MMMM');
+  HomeController homeController = Get.find();
+
+  final DateFormat formatter = DateFormat('MMMM,y');
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,6 @@ class AddExpense extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               color: kPrimaryColor,
@@ -28,7 +31,7 @@ class AddExpense extends StatelessWidget {
               child: Row(
                 children: [
                   const Text(
-                    'Add Expense',
+                    'Add Budget',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -173,7 +176,15 @@ class AddExpense extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        homeController.addMonthsCard(
+                          MonthsCardModel(
+                            monthName: dateTime.split(',')[0],
+                            year: dateTime.split(',')[1],
+                            budget: double.parse(amountController.text),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(

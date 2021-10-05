@@ -1,6 +1,12 @@
 class ExpenseModel {
   String? expenseName;
   double? amount;
+  String? note;
+  String? timeStamp;
 
-  ExpenseModel({this.expenseName, this.amount});
+  ExpenseModel(
+      {required this.expenseName,
+      required this.amount,
+      this.note,
+      this.timeStamp});
 }
