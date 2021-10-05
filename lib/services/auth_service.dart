@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_manager/screens/home_screen.dart';
 import 'package:expense_manager/widgets/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,6 +30,17 @@ class AuthService {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+
+      users
+          .add({
+            'Email': FirebaseAuth.instance.currentUser!.email,
+          })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+
       Get.to(
         () => const HomeScreen(),
       );

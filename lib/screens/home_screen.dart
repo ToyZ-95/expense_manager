@@ -41,15 +41,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (FirebaseAuth.instance.currentUser != null) {
       // Call the user's CollectionReference to add a new user
-
-      var data = users.get();
+      var creds = FirebaseAuth.instance.currentUser;
 
       users
-          .add({
-            'Email': FirebaseAuth.instance.currentUser!.email,
-          })
-          .then((value) => print("User Added"))
-          .catchError((error) => print("Failed to add user: $error"));
+          .where('Email', isEqualTo: creds!.email)
+          .get()
+          .then((QuerySnapshot querySnapshot) => {
+                querySnapshot.docs.forEach((doc) {
+                  print(doc["Email"]);
+                })
+              });
+
+      // var data = users
+      //     .doc(creds!.email)
+      //     .get()
+      //     .then((DocumentSnapshot documentSnapshot) {
+      //   if (documentSnapshot.exists) {
+      //     print('Document exists on the database');
+      //   }
+      // });
     }
   }
 
