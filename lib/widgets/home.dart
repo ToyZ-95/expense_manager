@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
-
+  final PageController pageController = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
                 const Spacer(),
                 GestureDetector(
                   onTap: () {
-                    Get.to(AddBudget());
+                    Get.to(() => AddBudget());
                   },
                   child: const Icon(
                     Icons.add,
@@ -40,24 +40,38 @@ class Home extends StatelessWidget {
               ],
             ),
           ),
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            scrollDirection: Axis.horizontal,
-            child: Column(
-              children: [
-                Row(
-                  children: homeController.monthsCards
-                      .map(
-                        (e) => HomeExpenseCard(
-                          monthsCardModel: e,
-                        ),
-                      )
-                      .toList(),
-                ),
-              ],
+          Expanded(
+            child: Obx(
+              () => PageView.builder(
+                itemCount: homeController.monthsCards.length,
+                scrollDirection: Axis.horizontal,
+                controller: pageController,
+                itemBuilder: (context, index) {
+                  return HomeExpenseCard(
+                    monthsCardModel: homeController.monthsCards[index],
+                  );
+                },
+              ),
             ),
           ),
+          // SingleChildScrollView(
+          //   physics: const BouncingScrollPhysics(
+          //       parent: AlwaysScrollableScrollPhysics()),
+          //   scrollDirection: Axis.horizontal,
+          //   child: Column(
+          //     children: [
+          //       Row(
+          //         children: homeController.monthsCards
+          //             .map(
+          //               (e) => HomeExpenseCard(
+          //                 monthsCardModel: e,
+          //               ),
+          //             )
+          //             .toList(),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           // Obx(
           //   () => Container(
           //     margin: const EdgeInsets.only(top: 50.0),

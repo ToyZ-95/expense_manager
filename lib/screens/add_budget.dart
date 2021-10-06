@@ -1,5 +1,6 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
+import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -182,8 +183,14 @@ class AddBudget extends StatelessWidget {
                             monthName: dateTime.split(',')[0],
                             year: dateTime.split(',')[1],
                             budget: double.parse(amountController.text),
+                            expenses: <ExpenseModel>[
+                              ExpenseModel(amount: 1000, expenseName: 'cloths'),
+                              ExpenseModel(amount: 1000, expenseName: 'cloths'),
+                              ExpenseModel(amount: 1000, expenseName: 'cloths'),
+                            ],
                           ),
                         );
+                        Get.back();
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(

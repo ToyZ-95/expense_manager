@@ -21,8 +21,10 @@ class HomeExpenseCard extends StatelessWidget {
     double remainingNum = 0.0;
     double expensesNum = 0.0;
 
-    for (ExpenseModel item in monthsCardModel.expenses!) {
-      expensesNum += item.amount!;
+    if (monthsCardModel.expenses != null) {
+      for (ExpenseModel item in monthsCardModel.expenses!) {
+        expensesNum += item.amount!;
+      }
     }
 
     remainingNum = monthsCardModel.budget! - expensesNum;
@@ -177,9 +179,10 @@ class HomeExpenseCard extends StatelessWidget {
           height: 60.0,
         ),
         FloatingActionButton(
-          heroTag: monthsCardModel.monthName,
+          heroTag: monthsCardModel.monthName.toString() +
+              monthsCardModel.year.toString(),
           onPressed: () {
-            Get.to(AddExpense());
+            Get.to(() => AddExpense());
           },
           backgroundColor: kPrimaryColor,
           child: const Icon(
