@@ -26,7 +26,7 @@ class AuthService {
     }
   }
 
-  static signUp(String email, String password) async {
+  static signUp(String email, String password, String userName) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -40,6 +40,8 @@ class AuthService {
           })
           .then((value) => print("User Added"))
           .catchError((error) => print("Failed to add user: $error"));
+
+      FirebaseAuth.instance.currentUser!.updateDisplayName(userName);
 
       Get.to(
         () => const HomeScreen(),

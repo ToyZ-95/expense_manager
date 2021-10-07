@@ -25,6 +25,8 @@ class _LoginState extends State<Login> {
       TextEditingController();
   TextEditingController registerConfirmPasswordTextFieldController =
       TextEditingController();
+  TextEditingController registerUsernameTextFieldController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +127,15 @@ class _LoginState extends State<Login> {
                           height: 40.0,
                         ),
                         CustomTextField(
+                          label: 'Username',
+                          textFieldontroller:
+                              registerUsernameTextFieldController,
+                          obsecure: false,
+                        ),
+                        const SizedBox(
+                          height: 50.0,
+                        ),
+                        CustomTextField(
                           label: 'Set Password',
                           textFieldontroller:
                               registerPasswordTextFieldController,
@@ -140,14 +151,15 @@ class _LoginState extends State<Login> {
                           obsecure: true,
                         ),
                         const SizedBox(
-                          height: 50.0,
+                          height: 40.0,
                         ),
                         CustomElevatedButton(
                           title: 'Register',
                           onPressed: () {
                             AuthService.signUp(
                                 registerEmailTextFieldController.text,
-                                registerPasswordTextFieldController.text);
+                                registerPasswordTextFieldController.text,
+                                registerUsernameTextFieldController.text);
                           },
                         ),
                       ],

@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  FirebaseAuth.instance.currentUser!.email!,
+                  FirebaseAuth.instance.currentUser!.displayName!,
                   style: const TextStyle(
                     color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
