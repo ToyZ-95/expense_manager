@@ -43,6 +43,8 @@ class Home extends StatelessWidget {
           Expanded(
             child: Obx(
               () => PageView.builder(
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 itemCount: homeController.monthsCards.length,
                 scrollDirection: Axis.horizontal,
                 controller: pageController,

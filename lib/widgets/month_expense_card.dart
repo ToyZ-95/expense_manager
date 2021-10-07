@@ -103,20 +103,34 @@ class HomeExpenseCard extends StatelessWidget {
                     sections: [
                       PieChartSectionData(
                         value: double.parse(remainingPercent),
+                        showTitle: false,
                         color: kPrimaryColor,
-                        title: remainingPercent + '%',
+                        //title: remainingPercent + '%',
+                        badgeWidget: Text(
+                          remainingPercent + '%',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        badgePositionPercentageOffset: 1.7,
                         titleStyle: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 10.0,
                         ),
                       ),
                       if (expensesNum > 0.0)
                         PieChartSectionData(
                           value: double.parse(expensePercent),
-                          title: expensePercent + '%',
+                          showTitle: false,
+                          //title: expensePercent + '%',
                           color: kSecondaryColor,
+                          badgeWidget: Text(
+                            expensePercent + '%',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          badgePositionPercentageOffset: 1.7,
                           titleStyle: const TextStyle(
                             fontWeight: FontWeight.bold,
+                            fontSize: 10.0,
                           ),
                         ),
                     ],
