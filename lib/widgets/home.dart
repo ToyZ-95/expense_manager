@@ -1,7 +1,7 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/screens/add_budget.dart';
-import 'package:expense_manager/widgets/month_expense_card.dart';
+import 'package:expense_manager/widgets/month_expense_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  FirebaseAuth.instance.currentUser!.displayName!,
+                  'Hi, ' + FirebaseAuth.instance.currentUser!.displayName!,
                   style: const TextStyle(
                     color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 controller: pageController,
                 itemBuilder: (context, index) {
-                  return HomeExpenseCard(
+                  return HomeExpenseData(
                     monthsCardModel: homeController.monthsCards[index],
                   );
                 },

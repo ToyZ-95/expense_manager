@@ -8,5 +8,5 @@ class ExpenseModel {
       {required this.expenseName,
       required this.amount,
       this.note,
-      this.timeStamp});
+      required this.timeStamp});
 }
