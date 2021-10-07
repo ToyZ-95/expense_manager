@@ -183,11 +183,6 @@ class AddBudget extends StatelessWidget {
                             monthName: dateTime.split(',')[0],
                             year: dateTime.split(',')[1],
                             budget: double.parse(amountController.text),
-                            expenses: <ExpenseModel>[
-                              ExpenseModel(amount: 1000, expenseName: 'cloths'),
-                              ExpenseModel(amount: 1000, expenseName: 'cloths'),
-                              ExpenseModel(amount: 1000, expenseName: 'cloths'),
-                            ],
                           ),
                         );
                         Get.back();

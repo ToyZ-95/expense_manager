@@ -110,14 +110,15 @@ class HomeExpenseCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      PieChartSectionData(
-                        value: double.parse(expensePercent),
-                        title: expensePercent + '%',
-                        color: kSecondaryColor,
-                        titleStyle: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                      if (expensesNum > 0.0)
+                        PieChartSectionData(
+                          value: double.parse(expensePercent),
+                          title: expensePercent + '%',
+                          color: kSecondaryColor,
+                          titleStyle: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   swapAnimationDuration:
