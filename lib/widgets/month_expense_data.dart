@@ -2,6 +2,8 @@ import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/screens/add_expense_screen.dart';
+import 'package:expense_manager/widgets/expense_date_card.dart';
+import 'package:expense_manager/widgets/expense_details_card.dart';
 import 'package:expense_manager/widgets/indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
@@ -413,133 +415,14 @@ class HomeExpenseData extends StatelessWidget {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  Container(
-                    height: 45.0,
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xFFF6F6F6),
-                            offset: Offset(-0.5, 0.5),
-                            spreadRadius: 0.5,
-                            blurRadius: 1.2),
-                        BoxShadow(
-                            color: Color(0xFFF6F6F6),
-                            offset: Offset(0.5, -0.5),
-                            spreadRadius: 0.5,
-                            blurRadius: 1.2),
-                        BoxShadow(
-                            color: Color(0xFFF6F6F6),
-                            offset: Offset(-0.5, -0.5),
-                            spreadRadius: 0.5,
-                            blurRadius: 1.2),
-                        BoxShadow(
-                            color: Color(0xFFF6F6F6),
-                            offset: Offset(0.5, 0.5),
-                            spreadRadius: 0.5,
-                            blurRadius: 1.2),
-                      ],
-                    ),
-                    child: Row(
-                      children: const [
-                        Text(
-                          '1st',
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 12.0,
-                        ),
-                        Text(
-                          'Sunday',
-                          style: TextStyle(
-                            color: kSecondaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ],
-                    ),
+                  ExpenseDateCard(
+                    expenseModel: monthsCardModel.expenses!.last,
                   ),
                   const SizedBox(
                     height: 10.0,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 20.0),
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.attach_money_rounded,
-                          color: kPrimaryColor,
-                        ),
-                        const SizedBox(
-                          width: 10.0,
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 45.0,
-                            padding:
-                                const EdgeInsets.only(left: 20.0, right: 10.0),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.0),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xFFF6F6F6),
-                                    offset: Offset(-0.5, 0.5),
-                                    spreadRadius: 0.5,
-                                    blurRadius: 1.2),
-                                BoxShadow(
-                                    color: Color(0xFFF6F6F6),
-                                    offset: Offset(0.5, -0.5),
-                                    spreadRadius: 0.5,
-                                    blurRadius: 1.2),
-                                BoxShadow(
-                                    color: Color(0xFFF6F6F6),
-                                    offset: Offset(-0.5, -0.5),
-                                    spreadRadius: 0.5,
-                                    blurRadius: 1.2),
-                                BoxShadow(
-                                    color: Color(0xFFF6F6F6),
-                                    offset: Offset(0.5, 0.5),
-                                    spreadRadius: 0.5,
-                                    blurRadius: 1.2),
-                              ],
-                            ),
-                            child: Row(
-                              children: const [
-                                Text(
-                                  'Bills',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Spacer(),
-                                Text(
-                                  '500',
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Icon(
-                                  Icons.attach_money_sharp,
-                                  color: kPrimaryColor,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                  ExpenseDetailsCard(
+                    expenseModel: monthsCardModel.expenses!.last,
                   ),
                 ],
               ),
