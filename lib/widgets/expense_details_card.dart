@@ -1,6 +1,7 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/expense_model.dart';
+import 'package:expense_manager/utilities/helper_class.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseDetailsCard extends StatelessWidget {
@@ -15,7 +16,7 @@ class ExpenseDetailsCard extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            getCategoryIconPath(expenseModel!.category!),
+            HelperClass.getCategoryIconPath(expenseModel!.category!),
             height: 24.0,
           ),
           const SizedBox(
@@ -76,30 +77,5 @@ class ExpenseDetailsCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String getCategoryIconPath(ExpenseCategory category) {
-    String iconPath = '';
-    switch (category) {
-      case ExpenseCategory.bills:
-        iconPath = 'assets/bills.png';
-        break;
-      case ExpenseCategory.food:
-        iconPath = 'assets/food.png';
-        break;
-      case ExpenseCategory.clothes:
-        iconPath = 'assets/clothes.png';
-        break;
-      case ExpenseCategory.transport:
-        iconPath = 'assets/transport.png';
-        break;
-      case ExpenseCategory.fun:
-        iconPath = 'assets/fun.png';
-        break;
-      case ExpenseCategory.other:
-        iconPath = 'assets/other.png';
-        break;
-    }
-    return iconPath;
   }
 }

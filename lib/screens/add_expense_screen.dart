@@ -1,4 +1,5 @@
 import 'package:expense_manager/constants/constants.dart';
+import 'package:expense_manager/widgets/selectable_tile_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +16,8 @@ class AddExpense extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        // physics: const BouncingScrollPhysics(
+        //     parent: AlwaysScrollableScrollPhysics()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,7 +60,10 @@ class AddExpense extends StatelessWidget {
                 children: [
                   const Text(
                     'Amount',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
                   ),
                   const SizedBox(
                     height: 16.0,
@@ -123,15 +128,35 @@ class AddExpense extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 24.0,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
+                'Select Category',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: SelectableTileGrid(),
+            ),
             Container(
               padding:
-                  const EdgeInsets.only(top: 50.0, left: 24.0, right: 24.0),
+                  const EdgeInsets.only(top: 30.0, left: 24.0, right: 24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     'More Details',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
                   ),
                   const SizedBox(
                     height: 20.0,
@@ -171,7 +196,8 @@ class AddExpense extends StatelessWidget {
                     height: 20.0,
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 18.0),
+                    margin: const EdgeInsets.only(
+                        left: 18.0, right: 18.0, bottom: 30.0),
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(

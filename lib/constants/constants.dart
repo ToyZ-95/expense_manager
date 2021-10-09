@@ -11,3 +11,16 @@ const BoxDecoration kAppBackgroundThemeBox = BoxDecoration(
 
 const Color kPrimaryColor = Color(0xFF1441F1);
 const Color kSecondaryColor = Color(0xFF9ba5f8);
+
+const String foodIconPath = 'assets/food.png';
+const String foodSecondaryIconPath = 'assets/food_secondary.png';
+const String billsIconPath = 'assets/bills.png';
+const String billsSecondaryIconPath = 'assets/bills_secondary.png';
+const String clothesIconPath = 'assets/clothes.png';
+const String clothesSecondaryIconPath = 'assets/clothes_secondary.png';
+const String funIconPath = 'assets/fun.png';
+const String funSecondaryIconPath = 'assets/fun_secondary.png';
+const String transportIconPath = 'assets/transport.png';
+const String transportSecondaryIconPath = 'assets/transport_secondary.png';
+const String otherIconPath = 'assets/other.png';
+const String otherSecondaryIconPath = 'assets/other_secondary.png';

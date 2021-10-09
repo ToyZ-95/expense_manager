@@ -19,7 +19,7 @@ class AddBudget extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        // physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Container(
