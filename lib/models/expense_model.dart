@@ -1,9 +1,11 @@
+import 'package:expense_manager/enums/global_enums.dart';
+
 class ExpenseModel {
   String? expenseName;
   double? amount;
   String? note;
   String? timeStamp;
-  int? category;
+  ExpenseCategory? category;
 
   ExpenseModel(
       {required this.expenseName,

@@ -15,12 +15,12 @@ class ExpenseDateCard extends StatelessWidget {
       height: 45.0,
       margin: const EdgeInsets.symmetric(horizontal: 20.0),
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(10.0),
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
               color: Color(0xFFF6F6F6),
               offset: Offset(-0.5, 0.5),
@@ -42,6 +42,7 @@ class ExpenseDateCard extends StatelessWidget {
               spreadRadius: 0.5,
               blurRadius: 1.2),
         ],
+        border: Border.all(color: kSecondaryColor),
       ),
       child: Row(
         children: [
