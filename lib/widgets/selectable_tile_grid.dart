@@ -1,4 +1,5 @@
 import 'package:expense_manager/enums/global_enums.dart';
+import 'package:expense_manager/screens/add_expense_screen.dart';
 import 'package:expense_manager/widgets/category_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +9,8 @@ class SelectableTileGrid extends StatefulWidget {
 }
 
 class _SelectableTileGridState extends State<SelectableTileGrid> {
-  ExpenseCategory? selectedCategory;
-
   void changeSelectedCategory(ExpenseCategory expenseCategory) {
-    selectedCategory = expenseCategory;
+    AddExpense.selectedCategory = expenseCategory;
     setState(() {});
   }
 
@@ -26,11 +25,13 @@ class _SelectableTileGridState extends State<SelectableTileGrid> {
                 changeSelectedCategory(ExpenseCategory.bills);
               },
               child: CategoryTile(
-                expenseCategory: selectedCategory == ExpenseCategory.bills
-                    ? ExpenseCategory.bills
-                    : ExpenseCategory.billsSecondary,
-                selected:
-                    selectedCategory == ExpenseCategory.bills ? true : false,
+                expenseCategory:
+                    AddExpense.selectedCategory == ExpenseCategory.bills
+                        ? ExpenseCategory.bills
+                        : ExpenseCategory.billsSecondary,
+                selected: AddExpense.selectedCategory == ExpenseCategory.bills
+                    ? true
+                    : false,
                 label: 'Bills',
               ),
             ),
@@ -40,11 +41,13 @@ class _SelectableTileGridState extends State<SelectableTileGrid> {
                 changeSelectedCategory(ExpenseCategory.food);
               },
               child: CategoryTile(
-                expenseCategory: selectedCategory == ExpenseCategory.food
-                    ? ExpenseCategory.food
-                    : ExpenseCategory.foodSecondary,
-                selected:
-                    selectedCategory == ExpenseCategory.food ? true : false,
+                expenseCategory:
+                    AddExpense.selectedCategory == ExpenseCategory.food
+                        ? ExpenseCategory.food
+                        : ExpenseCategory.foodSecondary,
+                selected: AddExpense.selectedCategory == ExpenseCategory.food
+                    ? true
+                    : false,
                 label: 'Food',
               ),
             ),
@@ -54,11 +57,13 @@ class _SelectableTileGridState extends State<SelectableTileGrid> {
                 changeSelectedCategory(ExpenseCategory.clothes);
               },
               child: CategoryTile(
-                expenseCategory: selectedCategory == ExpenseCategory.clothes
-                    ? ExpenseCategory.clothes
-                    : ExpenseCategory.clothesSecondary,
-                selected:
-                    selectedCategory == ExpenseCategory.clothes ? true : false,
+                expenseCategory:
+                    AddExpense.selectedCategory == ExpenseCategory.clothes
+                        ? ExpenseCategory.clothes
+                        : ExpenseCategory.clothesSecondary,
+                selected: AddExpense.selectedCategory == ExpenseCategory.clothes
+                    ? true
+                    : false,
                 label: 'Clothes',
               ),
             ),
@@ -71,12 +76,14 @@ class _SelectableTileGridState extends State<SelectableTileGrid> {
                 changeSelectedCategory(ExpenseCategory.transport);
               },
               child: CategoryTile(
-                expenseCategory: selectedCategory == ExpenseCategory.transport
-                    ? ExpenseCategory.transport
-                    : ExpenseCategory.transportSecondary,
-                selected: selectedCategory == ExpenseCategory.transport
-                    ? true
-                    : false,
+                expenseCategory:
+                    AddExpense.selectedCategory == ExpenseCategory.transport
+                        ? ExpenseCategory.transport
+                        : ExpenseCategory.transportSecondary,
+                selected:
+                    AddExpense.selectedCategory == ExpenseCategory.transport
+                        ? true
+                        : false,
                 label: 'Transport',
               ),
             ),
@@ -86,11 +93,13 @@ class _SelectableTileGridState extends State<SelectableTileGrid> {
                 changeSelectedCategory(ExpenseCategory.fun);
               },
               child: CategoryTile(
-                expenseCategory: selectedCategory == ExpenseCategory.fun
-                    ? ExpenseCategory.fun
-                    : ExpenseCategory.funSecondary,
-                selected:
-                    selectedCategory == ExpenseCategory.fun ? true : false,
+                expenseCategory:
+                    AddExpense.selectedCategory == ExpenseCategory.fun
+                        ? ExpenseCategory.fun
+                        : ExpenseCategory.funSecondary,
+                selected: AddExpense.selectedCategory == ExpenseCategory.fun
+                    ? true
+                    : false,
                 label: 'Fun',
               ),
             ),
@@ -100,11 +109,13 @@ class _SelectableTileGridState extends State<SelectableTileGrid> {
                 changeSelectedCategory(ExpenseCategory.other);
               },
               child: CategoryTile(
-                expenseCategory: selectedCategory == ExpenseCategory.other
-                    ? ExpenseCategory.other
-                    : ExpenseCategory.otherSecondary,
-                selected:
-                    selectedCategory == ExpenseCategory.other ? true : false,
+                expenseCategory:
+                    AddExpense.selectedCategory == ExpenseCategory.other
+                        ? ExpenseCategory.other
+                        : ExpenseCategory.otherSecondary,
+                selected: AddExpense.selectedCategory == ExpenseCategory.other
+                    ? true
+                    : false,
                 label: 'Other',
               ),
             ),

@@ -13,6 +13,17 @@ class AddBudget extends StatelessWidget {
 
   final DateFormat formatter = DateFormat('MMMM,y');
 
+  void addBudget(String dateTime) {
+    homeController.addMonthsCard(
+      MonthsCardModel(
+        monthName: dateTime.split(',')[0],
+        year: dateTime.split(',')[1],
+        budget: double.parse(amountController.text),
+      ),
+    );
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     String dateTime = formatter.format(DateTime.now());
@@ -177,14 +188,7 @@ class AddBudget extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 18.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        homeController.addMonthsCard(
-                          MonthsCardModel(
-                            monthName: dateTime.split(',')[0],
-                            year: dateTime.split(',')[1],
-                            budget: double.parse(amountController.text),
-                          ),
-                        );
-                        Get.back();
+                        addBudget(dateTime);
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(

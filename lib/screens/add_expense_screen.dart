@@ -1,4 +1,8 @@
 import 'package:expense_manager/constants/constants.dart';
+import 'package:expense_manager/controllers/home_controller.dart';
+import 'package:expense_manager/enums/global_enums.dart';
+import 'package:expense_manager/models/expense_model.dart';
+import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/widgets/selectable_tile_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +12,34 @@ class AddExpense extends StatelessWidget {
   TextEditingController amountController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
+  MonthsCardModel monthsCardModel;
   final DateFormat formatter = DateFormat('EEEE, d MMMM');
+
+  static ExpenseCategory? selectedCategory;
+
+  AddExpense({required this.monthsCardModel});
+
+  void addExpense() {
+    if (monthsCardModel.expenses != null) {
+      monthsCardModel.expenses!.add(
+        ExpenseModel(
+            expenseName: selectedCategory.toString(),
+            amount: double.parse(amountController.text),
+            timeStamp: DateTime.now().toString(),
+            category: selectedCategory),
+      );
+    } else {
+      monthsCardModel.expenses = [
+        ExpenseModel(
+            expenseName: selectedCategory.toString(),
+            amount: double.parse(amountController.text),
+            timeStamp: DateTime.now().toString(),
+            category: selectedCategory),
+      ];
+    }
+    selectedCategory = null;
+    Get.back();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +230,9 @@ class AddExpense extends StatelessWidget {
                     margin: const EdgeInsets.only(
                         left: 18.0, right: 18.0, bottom: 30.0),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        addExpense();
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
