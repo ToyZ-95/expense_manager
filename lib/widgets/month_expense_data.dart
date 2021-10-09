@@ -115,7 +115,8 @@ class HomeExpenseData extends StatelessWidget {
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
-                              badgePositionPercentageOffset: 1.7,
+                              badgePositionPercentageOffset:
+                                  remainingPercent.contains('100') ? 1.9 : 1.7,
                               titleStyle: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -133,7 +134,8 @@ class HomeExpenseData extends StatelessWidget {
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                 ),
-                                badgePositionPercentageOffset: 1.7,
+                                badgePositionPercentageOffset:
+                                    expensePercent.contains('100') ? 1.9 : 1.7,
                                 titleStyle: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 10.0,
