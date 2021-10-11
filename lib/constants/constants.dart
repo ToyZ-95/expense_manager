@@ -24,3 +24,7 @@ const String transportIconPath = 'assets/transport.png';
 const String transportSecondaryIconPath = 'assets/transport_secondary.png';
 const String otherIconPath = 'assets/other.png';
 const String otherSecondaryIconPath = 'assets/other_secondary.png';
+const String libraIconPath = 'assets/libra.png';
+const String libraSecondaryIconPath = 'assets/libra_secondary.png';
+const String calendarIconPath = 'assets/calendar.png';
+const String calendarSecondaryIconPath = 'assets/calendar_secondary.png';

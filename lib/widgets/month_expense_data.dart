@@ -2,6 +2,7 @@ import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/screens/add_expense_screen.dart';
+import 'package:expense_manager/screens/stats.dart';
 import 'package:expense_manager/widgets/expense_date_card.dart';
 import 'package:expense_manager/widgets/expense_details_card.dart';
 import 'package:expense_manager/widgets/indicator.dart';
@@ -240,7 +241,9 @@ class HomeExpenseData extends StatelessWidget {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => Stats());
+                    },
                     child: const Text(
                       'See All',
                       style: TextStyle(
