@@ -2,43 +2,36 @@ import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/expense_model.dart';
-import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/widgets/selectable_tile_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AddExpense extends StatelessWidget {
+  HomeController homeController = Get.find();
+
   TextEditingController amountController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
-  MonthsCardModel monthsCardModel;
+  String? guid;
+
   final DateFormat formatter = DateFormat('EEEE, d MMMM');
 
   static ExpenseCategory? selectedCategory;
 
-  AddExpense({required this.monthsCardModel});
+  AddExpense({required this.guid});
 
   void addExpense() {
-    if (monthsCardModel.expenses != null) {
-      monthsCardModel.expenses!.add(
-        ExpenseModel(
-            expenseName: selectedCategory.toString(),
-            amount: double.parse(amountController.text),
-            timeStamp: DateTime.now().toString(),
-            category: selectedCategory),
-      );
-    } else {
-      monthsCardModel.expenses = [
-        ExpenseModel(
-            expenseName: selectedCategory.toString(),
-            amount: double.parse(amountController.text),
-            timeStamp: DateTime.now().toString(),
-            category: selectedCategory),
-      ];
-    }
-    selectedCategory = null;
     Get.back();
+    homeController.addExpense(
+      guid!,
+      ExpenseModel(
+          expenseName: selectedCategory.toString(),
+          amount: double.parse(amountController.text),
+          timeStamp: DateTime.now().toString(),
+          category: selectedCategory),
+    );
+    selectedCategory = null;
   }
 
   @override

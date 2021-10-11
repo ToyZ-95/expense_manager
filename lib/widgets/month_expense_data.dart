@@ -194,7 +194,7 @@ class HomeExpenseData extends StatelessWidget {
               monthsCardModel.year.toString(),
           onPressed: () {
             Get.to(() => AddExpense(
-                  monthsCardModel: monthsCardModel,
+                  guid: monthsCardModel.guid,
                 ));
           },
           backgroundColor: kPrimaryColor,
