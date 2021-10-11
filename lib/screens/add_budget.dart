@@ -185,7 +185,8 @@ class AddBudget extends StatelessWidget {
                     height: 20.0,
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 18.0),
+                    margin: const EdgeInsets.only(
+                        left: 18.0, right: 18.0, bottom: 30.0),
                     child: ElevatedButton(
                       onPressed: () {
                         addBudget(dateTime);

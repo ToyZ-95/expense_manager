@@ -289,8 +289,10 @@ class HomeExpenseData extends StatelessWidget {
     remainingPercent =
         ((remainingNum * 100) / monthsCardModel.budget!).toStringAsFixed(2);
 
-    return Column(
-      children: getWidgets(context),
+    return SingleChildScrollView(
+      child: Column(
+        children: getWidgets(context),
+      ),
     );
   }
 }

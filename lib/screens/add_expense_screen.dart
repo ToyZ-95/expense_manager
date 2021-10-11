@@ -26,7 +26,8 @@ class AddExpense extends StatelessWidget {
     homeController.addExpense(
       guid!,
       ExpenseModel(
-          expenseName: selectedCategory.toString(),
+          expenseName:
+              selectedCategory.toString().split('.')[1].capitalizeFirst,
           amount: double.parse(amountController.text),
           timeStamp: DateTime.now().toString(),
           category: selectedCategory),
