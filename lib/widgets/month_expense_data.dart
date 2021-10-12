@@ -194,9 +194,11 @@ class HomeExpenseData extends StatelessWidget {
           heroTag: monthsCardModel.monthName.toString() +
               monthsCardModel.year.toString(),
           onPressed: () {
-            Get.to(() => AddExpense(
-                  guid: monthsCardModel.guid,
-                ));
+            Get.to(
+              () => AddExpense(
+                guid: monthsCardModel.guid,
+              ),
+            );
           },
           backgroundColor: kPrimaryColor,
           child: const Icon(
