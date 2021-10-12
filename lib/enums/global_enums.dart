@@ -10,5 +10,9 @@ enum ExpenseCategory {
   clothesSecondary,
   transportSecondary,
   funSecondary,
-  otherSecondary
+  otherSecondary,
+  libra,
+  libraSecondary,
+  calendar,
+  calendarSecondary
 }
