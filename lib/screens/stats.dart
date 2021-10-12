@@ -1,5 +1,7 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/stats_controller.dart';
+import 'package:expense_manager/widgets/expense_date_card.dart';
+import 'package:expense_manager/widgets/expense_details_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -205,7 +207,7 @@ class Stats extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   itemCount: 5,
                   itemBuilder: (context, index) {
-                    return const Text('abcd');
+                    return const Text('ABCD');
                   }),
             ),
           ],
