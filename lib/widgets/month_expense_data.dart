@@ -11,6 +11,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'month_expense_list.dart';
+
 class HomeExpenseData extends StatelessWidget {
   MonthsCardModel monthsCardModel;
 
@@ -244,7 +246,32 @@ class HomeExpenseData extends StatelessWidget {
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => Stats());
+                      Get.to(
+                        () => AddExpense(
+                          guid: monthsCardModel.guid,
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Add',
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(
+                        () => Stats(
+                          monthsCardModel: monthsCardModel,
+                          selectedTab: 2,
+                        ),
+                      );
                     },
                     child: const Text(
                       'See All',
@@ -261,15 +288,16 @@ class HomeExpenseData extends StatelessWidget {
             const SizedBox(
               height: 20.0,
             ),
-            ExpenseDateCard(
-              expenseModel: monthsCardModel.expenses!.last,
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            ExpenseDetailsCard(
-              expenseModel: monthsCardModel.expenses!.last,
-            ),
+            MonthExpenseList(monthsCardModel: monthsCardModel, onlyLast: true),
+            // ExpenseDateCard(
+            //   expenseModel: monthsCardModel.expenses!.last,
+            // ),
+            // const SizedBox(
+            //   height: 10.0,
+            // ),
+            // ExpenseDetailsCard(
+            //   expenseModel: monthsCardModel.expenses!.last,
+            // ),
           ],
         ),
       );
