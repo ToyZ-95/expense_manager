@@ -15,7 +15,12 @@ class Home extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 48.0, left: 20.0, right: 20.0),
+            padding: const EdgeInsets.only(
+              top: 48.0,
+              left: 20.0,
+              right: 20.0,
+              bottom: 10.0,
+            ),
             child: Row(
               children: [
                 Text(

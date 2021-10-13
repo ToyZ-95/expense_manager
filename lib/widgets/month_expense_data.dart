@@ -1,10 +1,9 @@
 import 'package:expense_manager/constants/constants.dart';
+import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/screens/add_expense_screen.dart';
 import 'package:expense_manager/screens/stats.dart';
-import 'package:expense_manager/widgets/expense_date_card.dart';
-import 'package:expense_manager/widgets/expense_details_card.dart';
 import 'package:expense_manager/widgets/indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,14 +15,9 @@ import 'month_expense_list.dart';
 class HomeExpenseData extends StatelessWidget {
   MonthsCardModel monthsCardModel;
 
+  HomeController homeController = Get.find();
+
   HomeExpenseData({required this.monthsCardModel});
-
-  late String remainingPercent;
-  late String expensePercent;
-
-  double remainingNum = 0.0;
-  double expensesNum = 0.0;
-  double budget = 0.0;
 
   List<Widget> getWidgets(BuildContext context) {
     List<Widget> list = [];
@@ -93,36 +87,47 @@ class HomeExpenseData extends StatelessWidget {
                   centerSpaceRadius: 50.0,
                   // read about it in the PieChartData section
                   sections: [
-                    if (expensesNum <= budget)
+                    if (homeController.getTotalExpenses(monthsCardModel) <=
+                        homeController.getBudget(monthsCardModel))
                       PieChartSectionData(
-                        value: double.parse(remainingPercent),
+                        value: double.parse(homeController
+                            .getRemainingPercent(monthsCardModel)),
                         showTitle: false,
                         color: kPrimaryColor,
                         //title: remainingPercent + '%',
                         badgeWidget: Text(
-                          remainingPercent + '%',
+                          homeController.getRemainingPercent(monthsCardModel) +
+                              '%',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        badgePositionPercentageOffset:
-                            remainingPercent.contains('100') ? 1.9 : 1.7,
+                        badgePositionPercentageOffset: homeController
+                                .getRemainingPercent(monthsCardModel)
+                                .contains('100')
+                            ? 1.9
+                            : 1.7,
                         titleStyle: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 10.0,
                         ),
                       ),
-                    if (expensesNum > 0.0)
+                    if (homeController.getTotalExpenses(monthsCardModel) > 0.0)
                       PieChartSectionData(
-                        value: double.parse(expensePercent),
+                        value: double.parse(
+                            homeController.getExpensePercent(monthsCardModel)),
                         showTitle: false,
                         //title: expensePercent + '%',
                         color: kSecondaryColor,
                         badgeWidget: Text(
-                          expensePercent + '%',
+                          homeController.getExpensePercent(monthsCardModel) +
+                              '%',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        badgePositionPercentageOffset:
-                            expensePercent.contains('100') ? 1.9 : 1.7,
+                        badgePositionPercentageOffset: homeController
+                                .getExpensePercent(monthsCardModel)
+                                .contains('100')
+                            ? 1.9
+                            : 1.7,
                         titleStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 10.0,
@@ -301,20 +306,6 @@ class HomeExpenseData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (monthsCardModel.expenses != null) {
-      for (ExpenseModel item in monthsCardModel.expenses!) {
-        expensesNum += item.amount!;
-      }
-    }
-
-    budget = monthsCardModel.budget!;
-
-    remainingNum = budget - expensesNum;
-
-    expensePercent = (expensesNum * 100 / budget).toStringAsFixed(2);
-
-    remainingPercent = ((remainingNum * 100) / budget).toStringAsFixed(2);
-
     return SingleChildScrollView(
       child: Column(
         children: getWidgets(context),

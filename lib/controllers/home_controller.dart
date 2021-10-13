@@ -28,16 +28,32 @@ class HomeController extends GetxController {
       monthCardModel.expenses = [expenseModel];
     }
     monthsCards.refresh();
+  }
 
-    double getTotalExpenses(String guid) {
-      double expensesNum = 0;
-      MonthsCardModel monthsCardModel =
-          monthsCards.firstWhere((element) => element.guid == guid);
+  MonthsCardModel getMonthModel(String guid) =>
+      monthsCards.firstWhere((element) => element.guid == guid);
 
+  double getTotalExpenses(MonthsCardModel monthsCardModel) {
+    double expensesNum = 0;
+    if (monthsCardModel.expenses != null) {
       for (ExpenseModel item in monthsCardModel.expenses!) {
         expensesNum += item.amount!;
       }
-      return expensesNum;
     }
+
+    return expensesNum;
   }
+
+  double getBudget(MonthsCardModel monthsCardModel) => monthsCardModel.budget!;
+
+  double getRemainingBudget(MonthsCardModel monthsCardModel) =>
+      getBudget(monthsCardModel) - getTotalExpenses(monthsCardModel);
+
+  String getExpensePercent(MonthsCardModel monthsCardModel) =>
+      (getTotalExpenses(monthsCardModel) * 100 / getBudget(monthsCardModel))
+          .toStringAsFixed(2);
+
+  String getRemainingPercent(MonthsCardModel monthsCardModel) =>
+      ((getRemainingBudget(monthsCardModel) * 100) / getBudget(monthsCardModel))
+          .toStringAsFixed(2);
 }
