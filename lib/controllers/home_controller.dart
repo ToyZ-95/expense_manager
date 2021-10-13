@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   //Using rx list to get access refresh() when any changes occurs in list
   //e.g. adding expense to list
-  RxList<MonthsCardModel> monthsCards = GetMonthsCard().obs;
+  RxList<MonthsCardModel> monthsCards = <MonthsCardModel>[].obs;
 
   @override
   void onInit() {
@@ -28,5 +28,16 @@ class HomeController extends GetxController {
       monthCardModel.expenses = [expenseModel];
     }
     monthsCards.refresh();
+
+    double getTotalExpenses(String guid) {
+      double expensesNum = 0;
+      MonthsCardModel monthsCardModel =
+          monthsCards.firstWhere((element) => element.guid == guid);
+
+      for (ExpenseModel item in monthsCardModel.expenses!) {
+        expensesNum += item.amount!;
+      }
+      return expensesNum;
+    }
   }
 }

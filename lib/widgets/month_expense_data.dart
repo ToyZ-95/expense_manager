@@ -23,6 +23,7 @@ class HomeExpenseData extends StatelessWidget {
 
   double remainingNum = 0.0;
   double expensesNum = 0.0;
+  double budget = 0.0;
 
   List<Widget> getWidgets(BuildContext context) {
     List<Widget> list = [];
@@ -92,7 +93,7 @@ class HomeExpenseData extends StatelessWidget {
                   centerSpaceRadius: 50.0,
                   // read about it in the PieChartData section
                   sections: [
-                    if (remainingNum > expensesNum)
+                    if (expensesNum <= budget)
                       PieChartSectionData(
                         value: double.parse(remainingPercent),
                         showTitle: false,
@@ -306,13 +307,13 @@ class HomeExpenseData extends StatelessWidget {
       }
     }
 
-    remainingNum = monthsCardModel.budget! - expensesNum;
+    budget = monthsCardModel.budget!;
 
-    expensePercent =
-        (expensesNum * 100 / monthsCardModel.budget!).toStringAsFixed(2);
+    remainingNum = budget - expensesNum;
 
-    remainingPercent =
-        ((remainingNum * 100) / monthsCardModel.budget!).toStringAsFixed(2);
+    expensePercent = (expensesNum * 100 / budget).toStringAsFixed(2);
+
+    remainingPercent = ((remainingNum * 100) / budget).toStringAsFixed(2);
 
     return SingleChildScrollView(
       child: Column(
