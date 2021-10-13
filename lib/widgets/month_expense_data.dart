@@ -92,23 +92,24 @@ class HomeExpenseData extends StatelessWidget {
                   centerSpaceRadius: 50.0,
                   // read about it in the PieChartData section
                   sections: [
-                    PieChartSectionData(
-                      value: double.parse(remainingPercent),
-                      showTitle: false,
-                      color: kPrimaryColor,
-                      //title: remainingPercent + '%',
-                      badgeWidget: Text(
-                        remainingPercent + '%',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                    if (remainingNum > expensesNum)
+                      PieChartSectionData(
+                        value: double.parse(remainingPercent),
+                        showTitle: false,
+                        color: kPrimaryColor,
+                        //title: remainingPercent + '%',
+                        badgeWidget: Text(
+                          remainingPercent + '%',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        badgePositionPercentageOffset:
+                            remainingPercent.contains('100') ? 1.9 : 1.7,
+                        titleStyle: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10.0,
+                        ),
                       ),
-                      badgePositionPercentageOffset:
-                          remainingPercent.contains('100') ? 1.9 : 1.7,
-                      titleStyle: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10.0,
-                      ),
-                    ),
                     if (expensesNum > 0.0)
                       PieChartSectionData(
                         value: double.parse(expensePercent),
@@ -289,15 +290,6 @@ class HomeExpenseData extends StatelessWidget {
               height: 20.0,
             ),
             MonthExpenseList(monthsCardModel: monthsCardModel, onlyLast: true),
-            // ExpenseDateCard(
-            //   expenseModel: monthsCardModel.expenses!.last,
-            // ),
-            // const SizedBox(
-            //   height: 10.0,
-            // ),
-            // ExpenseDetailsCard(
-            //   expenseModel: monthsCardModel.expenses!.last,
-            // ),
           ],
         ),
       );
