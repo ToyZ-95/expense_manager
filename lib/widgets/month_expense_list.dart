@@ -28,13 +28,18 @@ class MonthExpenseList extends StatelessWidget {
         expenseModel: monthsCardModel.expenses!.last,
       ));
     } else {
-      String expenseTimeStamp = monthsCardModel.expenses![0].timeStamp!;
+      DateTime firstTimeStamp =
+          DateTime.parse(monthsCardModel.expenses![0].timeStamp!);
       list.add(ExpenseDateCard(expenseModel: monthsCardModel.expenses![0]));
 
       for (var i = 0; i < monthsCardModel.expenses!.length; i++) {
-        if (expenseTimeStamp != monthsCardModel.expenses![i].timeStamp) {
-          expenseTimeStamp = monthsCardModel.expenses![i].timeStamp!;
-          list.add(ExpenseDateCard(expenseModel: monthsCardModel.expenses![i]));
+        DateTime secondTimeStamp =
+            DateTime.parse(monthsCardModel.expenses![0].timeStamp!);
+        if (firstTimeStamp.day != secondTimeStamp.day) {
+          firstTimeStamp = secondTimeStamp;
+          list.add(
+            ExpenseDateCard(expenseModel: monthsCardModel.expenses![i]),
+          );
         }
         list.add(
           const SizedBox(
@@ -42,11 +47,7 @@ class MonthExpenseList extends StatelessWidget {
           ),
         );
         list.add(
-            ExpenseDetailsCard(expenseModel: monthsCardModel.expenses![i]));
-        list.add(
-          const SizedBox(
-            height: 10.0,
-          ),
+          ExpenseDetailsCard(expenseModel: monthsCardModel.expenses![i]),
         );
       }
     }
