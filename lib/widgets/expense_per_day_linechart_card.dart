@@ -39,7 +39,7 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       width: MediaQuery.of(context).size.width - 10,
-      height: MediaQuery.of(context).size.height / 4,
+      height: MediaQuery.of(context).size.height / 2,
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Column(
         children: [
@@ -77,7 +77,7 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                     reservedSize: 10,
                     interval: 1,
                     getTextStyles: (context, value) => const TextStyle(
-                        color: Color(0xff68737d),
+                        color: kSecondaryColor,
                         fontWeight: FontWeight.bold,
                         fontSize: 16),
                     getTitles: (value) {
@@ -100,13 +100,13 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                     border:
                         Border.all(color: const Color(0xff37434d), width: 1)),
                 minX: 0,
-                maxX: 11,
+                maxX: 31,
                 minY: 0,
-                maxY: 6,
+                maxY: 500,
                 lineBarsData: [
                   LineChartBarData(
                     spots: [
-                      FlSpot(1, 3),
+                      FlSpot(0, 300),
                       FlSpot(2, 2),
                       FlSpot(4, 5),
                       FlSpot(6, 3),
@@ -116,14 +116,14 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                     ],
                     isCurved: false,
                     colors: <Color>[kPrimaryColor, kPrimaryColor],
-                    barWidth: 2,
+                    barWidth: 1.5,
                     isStrokeCapRound: true,
                     dotData: FlDotData(
                       show: true,
                     ),
                     belowBarData: BarAreaData(
-                      show: false,
-                      colors: [kPrimaryColor, kSecondaryColor]
+                      show: true,
+                      colors: [kSecondaryColor, kPrimaryColor]
                           .map(
                             (color) => color.withOpacity(0.3),
                           )

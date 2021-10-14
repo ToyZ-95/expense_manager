@@ -1,6 +1,7 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/screens/stats.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,59 +41,68 @@ class RemainingExpensePieChartCard extends StatelessWidget {
     );
     list.add(
       Expanded(
-        child: PieChart(
-          PieChartData(
-            centerSpaceRadius: 35.0,
-            // read about it in the PieChartData section
-            sections: [
-              if (homeController.getTotalExpenses(monthsCardModel) <=
-                  homeController.getBudget(monthsCardModel))
-                PieChartSectionData(
-                  value: double.parse(
-                      homeController.getRemainingPercent(monthsCardModel)),
-                  showTitle: false,
-                  color: kPrimaryColor,
-                  //title: remainingPercent + '%',
-                  badgeWidget: Text(
-                    homeController.getRemainingPercent(monthsCardModel) + '%',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+        child: GestureDetector(
+          onTap: () {
+            Get.to(() => Stats(
+                  monthsCardModel: monthsCardModel,
+                  selectedTab: 1,
+                ));
+          },
+          child: PieChart(
+            PieChartData(
+              centerSpaceRadius: 35.0,
+              // read about it in the PieChartData section
+              sections: [
+                if (homeController.getTotalExpenses(monthsCardModel) <=
+                    homeController.getBudget(monthsCardModel))
+                  PieChartSectionData(
+                    value: double.parse(
+                        homeController.getRemainingPercent(monthsCardModel)),
+                    showTitle: false,
+                    color: kPrimaryColor,
+                    //title: remainingPercent + '%',
+                    badgeWidget: Text(
+                      homeController.getRemainingPercent(monthsCardModel) + '%',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    badgePositionPercentageOffset: homeController
+                            .getRemainingPercent(monthsCardModel)
+                            .contains('100')
+                        ? 1.8
+                        : 1.7,
+                    titleStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10.0,
+                    ),
                   ),
-                  badgePositionPercentageOffset: homeController
-                          .getRemainingPercent(monthsCardModel)
-                          .contains('100')
-                      ? 1.8
-                      : 1.7,
-                  titleStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10.0,
+                if (homeController.getTotalExpenses(monthsCardModel) > 0.0)
+                  PieChartSectionData(
+                    value: double.parse(
+                        homeController.getExpensePercent(monthsCardModel)),
+                    showTitle: false,
+                    //title: expensePercent + '%',
+                    color: kSecondaryColor,
+                    badgeWidget: Text(
+                      homeController.getExpensePercent(monthsCardModel) + '%',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    badgePositionPercentageOffset: homeController
+                            .getExpensePercent(monthsCardModel)
+                            .contains('100')
+                        ? 1.8
+                        : 1.7,
+                    titleStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10.0,
+                    ),
                   ),
-                ),
-              if (homeController.getTotalExpenses(monthsCardModel) > 0.0)
-                PieChartSectionData(
-                  value: double.parse(
-                      homeController.getExpensePercent(monthsCardModel)),
-                  showTitle: false,
-                  //title: expensePercent + '%',
-                  color: kSecondaryColor,
-                  badgeWidget: Text(
-                    homeController.getExpensePercent(monthsCardModel) + '%',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  badgePositionPercentageOffset: homeController
-                          .getExpensePercent(monthsCardModel)
-                          .contains('100')
-                      ? 1.8
-                      : 1.7,
-                  titleStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10.0,
-                  ),
-                ),
-            ],
+              ],
+            ),
+            swapAnimationDuration:
+                const Duration(milliseconds: 150), // Optional
+            swapAnimationCurve: Curves.linear, // Optional
           ),
-          swapAnimationDuration: const Duration(milliseconds: 150), // Optional
-          swapAnimationCurve: Curves.linear, // Optional
         ),
       ),
     );

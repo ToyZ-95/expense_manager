@@ -22,17 +22,9 @@ class HomeExpenseData extends StatelessWidget {
     List<Widget> list = [];
 
     list.add(
-      GestureDetector(
-        onTap: () {
-          Get.to(() => Stats(
-                monthsCardModel: monthsCardModel,
-                selectedTab: 1,
-              ));
-        },
-        child: RemainingExpensePieChartCard(
-          monthsCardModel: monthsCardModel,
-          editable: true,
-        ),
+      RemainingExpensePieChartCard(
+        monthsCardModel: monthsCardModel,
+        editable: true,
       ),
     );
 

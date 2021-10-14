@@ -136,20 +136,31 @@ class Stats extends StatelessWidget {
       ),
     );
 
+    list.add(
+      const SizedBox(
+        height: 10.00,
+      ),
+    );
+
     if (statsController!.selectedTab.value == 1) {
       list.add(
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              RemainingExpensePieChartCard(
-                monthsCardModel: monthsCardModel,
-                editable: false,
-              ),
-              ExpensePerDayLineChartCard(
-                monthsCardModel: monthsCardModel,
-              ),
-            ],
-          ),
+        Expanded(
+          child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: 1,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    RemainingExpensePieChartCard(
+                      monthsCardModel: monthsCardModel,
+                      editable: false,
+                    ),
+                    ExpensePerDayLineChartCard(
+                      monthsCardModel: monthsCardModel,
+                    ),
+                  ],
+                );
+              }),
         ),
       );
       // list.add(
