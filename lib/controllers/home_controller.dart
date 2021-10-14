@@ -1,3 +1,4 @@
+import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:get/get.dart';
@@ -56,4 +57,173 @@ class HomeController extends GetxController {
   String getRemainingPercent(MonthsCardModel monthsCardModel) =>
       ((getRemainingBudget(monthsCardModel) * 100) / getBudget(monthsCardModel))
           .toStringAsFixed(2);
+
+  double getHighestExpenseInMonth(MonthsCardModel monthsCardModel) {
+    //Take expense list from model
+    List<ExpenseModel> expenses = monthsCardModel.expenses!;
+
+    //sort expense list as per day
+    expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
+        .day
+        .compareTo(DateTime.parse(b.timeStamp!).day));
+
+    double highestExpense = 0;
+    double totalExpenseInADay = 0;
+
+    int day = 1;
+    for (var i = 0; i < expenses.length; i++) {
+      DateTime timeStamp = DateTime.parse(expenses[i].timeStamp!);
+
+      if (day != timeStamp.day) {
+        day = timeStamp.day;
+
+        if (highestExpense < totalExpenseInADay) {
+          highestExpense = totalExpenseInADay;
+        }
+
+        totalExpenseInADay = 0;
+      } else {
+        totalExpenseInADay += expenses[i].amount!;
+      }
+    }
+
+    return highestExpense;
+  }
+
+  Map<int, double> getPerDayExpenses(MonthsCardModel monthsCardModel) {
+    Map<int, double> map = {};
+
+    List<ExpenseModel> expenses = monthsCardModel.expenses!;
+
+    for (var i = 0; i <= 31; i++) {
+      List<ExpenseModel> expensesPerDay = expenses
+          .where((element) => DateTime.parse(element.timeStamp!).day == i)
+          .toList();
+      int day;
+      double amount;
+      for (var i = 0; i < expensesPerDay.length; i++) {
+        amount = expensesPerDay[i].amount!;
+      }
+
+      map[day] = amount;
+    }
+
+    return map;
+  }
+
+  void getDummyData() {
+    List<MonthsCardModel> list = [];
+
+    list.add(
+      MonthsCardModel(
+        monthName: 'September',
+        year: '2019',
+        budget: 60000,
+        expenses: <ExpenseModel>[
+          ExpenseModel(
+              amount: 5000,
+              category: ExpenseCategory.clothes,
+              expenseName: 'Clothes',
+              timeStamp: DateTime.parse('2019-09-05').toString()),
+          ExpenseModel(
+              amount: 1000,
+              category: ExpenseCategory.bills,
+              expenseName: 'Bills',
+              timeStamp: DateTime.parse('2019-09-01').toString()),
+          ExpenseModel(
+              amount: 2000,
+              category: ExpenseCategory.fun,
+              expenseName: 'Fun',
+              timeStamp: DateTime.parse('2019-09-05').toString()),
+          ExpenseModel(
+              amount: 5000,
+              category: ExpenseCategory.clothes,
+              expenseName: 'Clothes',
+              timeStamp: DateTime.parse('2019-09-01').toString()),
+          ExpenseModel(
+              amount: 6000,
+              category: ExpenseCategory.fun,
+              expenseName: 'Fun',
+              timeStamp: DateTime.parse('2019-09-02').toString()),
+          ExpenseModel(
+              amount: 2000,
+              category: ExpenseCategory.other,
+              expenseName: 'Other',
+              timeStamp: DateTime.parse('2019-09-02').toString()),
+          ExpenseModel(
+              amount: 500,
+              category: ExpenseCategory.transport,
+              expenseName: 'Transport',
+              timeStamp: DateTime.parse('2019-09-05').toString()),
+          ExpenseModel(
+              amount: 100,
+              category: ExpenseCategory.food,
+              expenseName: 'Food',
+              timeStamp: DateTime.parse('2019-09-05').toString()),
+          ExpenseModel(
+              amount: 7000,
+              category: ExpenseCategory.transport,
+              expenseName: 'Transport',
+              timeStamp: DateTime.parse('2019-09-08').toString()),
+          ExpenseModel(
+              amount: 5000,
+              category: ExpenseCategory.other,
+              expenseName: 'Other',
+              timeStamp: DateTime.parse('2019-09-08').toString()),
+          ExpenseModel(
+              amount: 3000,
+              category: ExpenseCategory.fun,
+              expenseName: 'Fun',
+              timeStamp: DateTime.parse('2019-09-10').toString()),
+          ExpenseModel(
+              amount: 2000,
+              category: ExpenseCategory.food,
+              expenseName: 'Food',
+              timeStamp: DateTime.parse('2019-09-13').toString()),
+          ExpenseModel(
+              amount: 1000,
+              category: ExpenseCategory.fun,
+              expenseName: 'Fun',
+              timeStamp: DateTime.parse('2019-09-19').toString()),
+          ExpenseModel(
+              amount: 9000,
+              category: ExpenseCategory.bills,
+              expenseName: 'Bills',
+              timeStamp: DateTime.parse('2019-09-13').toString()),
+          ExpenseModel(
+              amount: 4000,
+              category: ExpenseCategory.other,
+              expenseName: 'Other',
+              timeStamp: DateTime.parse('2019-09-13').toString()),
+          ExpenseModel(
+              amount: 3000,
+              category: ExpenseCategory.food,
+              expenseName: 'Food',
+              timeStamp: DateTime.parse('2019-09-19').toString()),
+          ExpenseModel(
+              amount: 100,
+              category: ExpenseCategory.transport,
+              expenseName: 'Transport',
+              timeStamp: DateTime.parse('2019-09-22').toString()),
+          ExpenseModel(
+              amount: 500,
+              category: ExpenseCategory.food,
+              expenseName: 'Food',
+              timeStamp: DateTime.parse('2019-09-22').toString()),
+          ExpenseModel(
+              amount: 1000,
+              category: ExpenseCategory.other,
+              expenseName: 'Other',
+              timeStamp: DateTime.parse('2019-09-29').toString()),
+          ExpenseModel(
+              amount: 1000,
+              category: ExpenseCategory.bills,
+              expenseName: 'Bills',
+              timeStamp: DateTime.parse('2019-09-30').toString()),
+        ],
+      ),
+    );
+
+    monthsCards.value = list;
+  }
 }

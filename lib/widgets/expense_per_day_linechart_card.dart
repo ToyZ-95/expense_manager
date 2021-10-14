@@ -1,12 +1,16 @@
 import 'package:expense_manager/constants/constants.dart';
+import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ExpensePerDayLineChartCard extends StatelessWidget {
   MonthsCardModel monthsCardModel;
 
   ExpensePerDayLineChartCard({required this.monthsCardModel});
+
+  HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +83,7 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                     getTextStyles: (context, value) => const TextStyle(
                         color: kSecondaryColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16),
+                        fontSize: 10),
                     getTitles: (value) {
                       switch (value.toInt()) {
                         case 2:
@@ -88,10 +92,12 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                           return 'JUN';
                         case 8:
                           return 'SEP';
+                        case 9:
+                          return 'OCT';
                       }
                       return '';
                     },
-                    margin: 8,
+                    margin: 10,
                   ),
                   leftTitles: SideTitles(showTitles: false),
                 ),
@@ -102,7 +108,7 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                 minX: 0,
                 maxX: 31,
                 minY: 0,
-                maxY: 500,
+                maxY: homeController.getHighestExpenseInMonth(monthsCardModel),
                 lineBarsData: [
                   LineChartBarData(
                     spots: [

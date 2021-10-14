@@ -8,9 +8,12 @@ import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
+
   final PageController pageController = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
+    homeController.getDummyData();
+
     return Scaffold(
       body: Column(
         children: [
