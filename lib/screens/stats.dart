@@ -2,7 +2,7 @@ import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/controllers/stats_controller.dart';
 import 'package:expense_manager/models/home_model.dart';
-import 'package:expense_manager/widgets/indicator.dart';
+import 'package:expense_manager/widgets/expense_per_day_linechart_card.dart';
 import 'package:expense_manager/widgets/month_expense_list.dart';
 import 'package:expense_manager/widgets/remaining_expense_pie_chart_card.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -11,6 +11,11 @@ import 'package:get/get.dart';
 
 class Stats extends StatelessWidget {
   //String? guid;
+
+  List<Color> gradientColors = [
+    kPrimaryColor,
+    kSecondaryColor,
+  ];
 
   MonthsCardModel monthsCardModel;
   StatsController? statsController;
@@ -133,10 +138,30 @@ class Stats extends StatelessWidget {
 
     if (statsController!.selectedTab.value == 1) {
       list.add(
-        RemainingExpensePieChartCard(
-          monthsCardModel: monthsCardModel,
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              RemainingExpensePieChartCard(
+                monthsCardModel: monthsCardModel,
+                editable: false,
+              ),
+              ExpensePerDayLineChartCard(
+                monthsCardModel: monthsCardModel,
+              ),
+            ],
+          ),
         ),
       );
+      // list.add(
+      //   RemainingExpensePieChartCard(
+      //     monthsCardModel: monthsCardModel,
+      //   ),
+      // );
+      // list.add(
+      //   ExpensePerDayLineChartCard(
+      //     monthsCardModel: monthsCardModel,
+      //   ),
+      // );
     } else if (statsController!.selectedTab.value == 2) {
       list.add(
         const SizedBox(

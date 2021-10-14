@@ -31,6 +31,7 @@ class HomeExpenseData extends StatelessWidget {
         },
         child: RemainingExpensePieChartCard(
           monthsCardModel: monthsCardModel,
+          editable: true,
         ),
       ),
     );
