@@ -104,7 +104,7 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                       border: const Border.symmetric(
                         vertical: BorderSide(color: Colors.black12, width: 0.7),
                       ),
-                    ), //Border.all(color: const Color(0xff37434d), width: 1)),
+                    ),
                     minX: 1,
                     maxX: homeController
                         .getLatestExpenseDay(monthsCardModel)
@@ -117,7 +117,7 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                         spots: getFlSpots(
                           homeController.getLatestExpenseDay(monthsCardModel),
                         ),
-                        isCurved: true,
+                        isCurved: false,
                         colors: <Color>[kPrimaryColor, kPrimaryColor],
                         barWidth: 2,
                         isStrokeCapRound: true,

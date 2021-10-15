@@ -191,7 +191,7 @@ class Stats extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    monthsCardModel!.monthName!,
+                    monthsCardModel.monthName!,
                     style: const TextStyle(
                       color: kPrimaryColor,
                       fontWeight: FontWeight.bold,
@@ -203,7 +203,7 @@ class Stats extends StatelessWidget {
                     height: 2.0,
                   ),
                   Text(
-                    monthsCardModel!.year!,
+                    monthsCardModel.year!,
                     style: const TextStyle(
                       color: kSecondaryColor,
                       fontWeight: FontWeight.bold,
