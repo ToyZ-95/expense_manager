@@ -11,12 +11,20 @@ class MonthExpenseList extends StatelessWidget {
   MonthExpenseList({this.monthsCardModel, this.onlyLast});
 
   List<Widget> getWidgets(MonthsCardModel monthsCardModel, bool onlyLast) {
+//Take expense list from model
+    List<ExpenseModel> expenses = monthsCardModel.expenses!;
+
+    //sort expense list as per day
+    expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
+        .day
+        .compareTo(DateTime.parse(b.timeStamp!).day));
+
     List<Widget> list = [];
 
     if (onlyLast) {
       list.add(
         ExpenseDateCard(
-          expenseModel: monthsCardModel.expenses!.last,
+          expenseModel: expenses.last,
         ),
       );
       list.add(
@@ -25,29 +33,35 @@ class MonthExpenseList extends StatelessWidget {
         ),
       );
       list.add(ExpenseDetailsCard(
-        expenseModel: monthsCardModel.expenses!.last,
+        expenseModel: expenses.last,
       ));
     } else {
-      DateTime firstTimeStamp =
-          DateTime.parse(monthsCardModel.expenses![0].timeStamp!);
-      list.add(ExpenseDateCard(expenseModel: monthsCardModel.expenses![0]));
+      int firstDay = DateTime.parse(expenses[0].timeStamp!).day;
 
-      for (var i = 0; i < monthsCardModel.expenses!.length; i++) {
-        DateTime secondTimeStamp =
-            DateTime.parse(monthsCardModel.expenses![0].timeStamp!);
-        if (firstTimeStamp.day != secondTimeStamp.day) {
-          firstTimeStamp = secondTimeStamp;
+      list.add(ExpenseDateCard(expenseModel: expenses[0]));
+
+      for (var i = 0; i < expenses.length; i++) {
+        int secondDay = DateTime.parse(expenses[i].timeStamp!).day;
+
+        if (firstDay != secondDay) {
+          firstDay = secondDay;
           list.add(
-            ExpenseDateCard(expenseModel: monthsCardModel.expenses![i]),
+            const SizedBox(
+              height: 10.0,
+            ),
+          );
+          list.add(
+            ExpenseDateCard(expenseModel: expenses[i]),
           );
         }
+
         list.add(
           const SizedBox(
             height: 10.0,
           ),
         );
         list.add(
-          ExpenseDetailsCard(expenseModel: monthsCardModel.expenses![i]),
+          ExpenseDetailsCard(expenseModel: expenses[i]),
         );
       }
     }

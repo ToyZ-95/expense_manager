@@ -81,34 +81,45 @@ class HomeController extends GetxController {
           highestExpense = totalExpenseInADay;
         }
 
-        totalExpenseInADay = 0;
+        totalExpenseInADay = expenses[i].amount!;
       } else {
         totalExpenseInADay += expenses[i].amount!;
       }
     }
-
+    if (highestExpense < totalExpenseInADay) {
+      highestExpense = totalExpenseInADay;
+    }
     return highestExpense;
   }
 
-  Map<int, double> getPerDayExpenses(MonthsCardModel monthsCardModel) {
-    Map<int, double> map = {};
+  double getPerDayExpenses(MonthsCardModel monthsCardModel, int day) {
+    double amount = 0;
 
-    List<ExpenseModel> expenses = monthsCardModel.expenses!;
+    List<ExpenseModel> expenses = monthsCardModel.expenses!
+        .where((element) => DateTime.parse(element.timeStamp!).day == day)
+        .toList();
 
-    for (var i = 0; i <= 31; i++) {
-      List<ExpenseModel> expensesPerDay = expenses
-          .where((element) => DateTime.parse(element.timeStamp!).day == i)
-          .toList();
-      int day;
-      double amount;
-      for (var i = 0; i < expensesPerDay.length; i++) {
-        amount = expensesPerDay[i].amount!;
-      }
-
-      map[day] = amount;
+    for (var i = 0; i < expenses.length; i++) {
+      amount += expenses[i].amount!;
     }
 
-    return map;
+    return amount;
+  }
+
+  int getLatestExpenseDay(MonthsCardModel monthsCardModel) {
+    int day = 0;
+
+    //Take expense list from model
+    List<ExpenseModel> expenses = monthsCardModel.expenses!;
+
+    //sort expense list as per day
+    expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
+        .day
+        .compareTo(DateTime.parse(b.timeStamp!).day));
+
+    day = DateTime.parse(expenses.last.timeStamp!).day;
+
+    return day;
   }
 
   void getDummyData() {
@@ -210,16 +221,16 @@ class HomeController extends GetxController {
               category: ExpenseCategory.food,
               expenseName: 'Food',
               timeStamp: DateTime.parse('2019-09-22').toString()),
-          ExpenseModel(
-              amount: 1000,
-              category: ExpenseCategory.other,
-              expenseName: 'Other',
-              timeStamp: DateTime.parse('2019-09-29').toString()),
-          ExpenseModel(
-              amount: 1000,
-              category: ExpenseCategory.bills,
-              expenseName: 'Bills',
-              timeStamp: DateTime.parse('2019-09-30').toString()),
+          // ExpenseModel(
+          //     amount: 1000,
+          //     category: ExpenseCategory.other,
+          //     expenseName: 'Other',
+          //     timeStamp: DateTime.parse('2019-09-29').toString()),
+          // ExpenseModel(
+          //     amount: 1000,
+          //     category: ExpenseCategory.bills,
+          //     expenseName: 'Bills',
+          //     timeStamp: DateTime.parse('2019-09-30').toString()),
         ],
       ),
     );

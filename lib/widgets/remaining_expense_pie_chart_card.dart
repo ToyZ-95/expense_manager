@@ -53,7 +53,7 @@ class RemainingExpensePieChartCard extends StatelessWidget {
               centerSpaceRadius: 35.0,
               // read about it in the PieChartData section
               sections: [
-                if (homeController.getTotalExpenses(monthsCardModel) <=
+                if (homeController.getTotalExpenses(monthsCardModel) <
                     homeController.getBudget(monthsCardModel))
                   PieChartSectionData(
                     value: double.parse(

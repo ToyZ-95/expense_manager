@@ -1,6 +1,5 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
-import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/screens/add_expense_screen.dart';
 import 'package:expense_manager/screens/stats.dart';
