@@ -40,7 +40,8 @@ class HomeExpenseData extends StatelessWidget {
           onPressed: () {
             Get.to(
               () => AddExpense(
-                guid: monthsCardModel.guid,
+                guid: monthsCardModel.guid!,
+                month: monthsCardModel.monthName!,
               ),
             );
           },
@@ -90,7 +91,8 @@ class HomeExpenseData extends StatelessWidget {
                     onTap: () {
                       Get.to(
                         () => AddExpense(
-                          guid: monthsCardModel.guid,
+                          guid: monthsCardModel.guid!,
+                          month: monthsCardModel.monthName!,
                         ),
                       );
                     },

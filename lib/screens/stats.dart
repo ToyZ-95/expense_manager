@@ -5,7 +5,6 @@ import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/widgets/expense_per_day_linechart_card.dart';
 import 'package:expense_manager/widgets/month_expense_list.dart';
 import 'package:expense_manager/widgets/remaining_expense_pie_chart_card.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

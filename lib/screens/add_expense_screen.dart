@@ -1,4 +1,5 @@
 import 'package:expense_manager/constants/constants.dart';
+import 'package:expense_manager/controllers/add_expense_controller.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/expense_model.dart';
@@ -13,18 +14,19 @@ class AddExpense extends StatelessWidget {
   TextEditingController amountController = TextEditingController();
   TextEditingController noteController = TextEditingController();
 
-  String? guid;
+  String guid;
+  String month;
 
   final DateFormat formatter = DateFormat('EEEE, d MMMM');
 
   static ExpenseCategory? selectedCategory;
 
-  AddExpense({required this.guid});
+  AddExpense({required this.guid, required this.month});
 
   void addExpense() {
     Get.back();
     homeController.addExpense(
-      guid!,
+      guid,
       ExpenseModel(
           expenseName:
               selectedCategory.toString().split('.')[1].capitalizeFirst,
@@ -35,9 +37,19 @@ class AddExpense extends StatelessWidget {
     selectedCategory = null;
   }
 
+  int daysInMonth(DateTime date) {
+    var firstDayThisMonth = DateTime(date.year, date.month, date.day);
+    var firstDayNextMonth = DateTime(firstDayThisMonth.year,
+        firstDayThisMonth.month + 1, firstDayThisMonth.day);
+    return firstDayNextMonth.difference(firstDayThisMonth).inDays;
+  }
+
   @override
   Widget build(BuildContext context) {
-    String dateTime = formatter.format(DateTime.now());
+    String dateString =
+        '${DateFormat('EEEE').format(DateTime.now())}, ${DateTime.now().day} ${month}';
+
+    DateTime expenseDate = formatter.parse(dateString);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -129,17 +141,37 @@ class AddExpense extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text(
-                        dateTime,
-                        textScaleFactor: 1.2,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: kPrimaryColor,
+                      GetBuilder<AddExpenseController>(
+                        init: AddExpenseController(month: month),
+                        builder: (value) => Text(
+                          value.expenseDateString,
+                          textScaleFactor: 1.2,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: kPrimaryColor,
+                          ),
                         ),
                       ),
                       const Spacer(),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          DateTime? picked = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime(
+                                DateTime.now().year, expenseDate.month, 1),
+                            firstDate: DateTime(
+                                DateTime.now().year, expenseDate.month, 1),
+                            lastDate: DateTime(DateTime.now().year,
+                                expenseDate.month, daysInMonth(DateTime.now())),
+                          );
+
+                          if (picked != null) {
+                            AddExpenseController addExpenseController =
+                                Get.find();
+                            addExpenseController
+                                .expenseDateStringChanged(picked);
+                          }
+                        },
                         icon: const Icon(
                           Icons.calendar_today_rounded,
                           color: kSecondaryColor,
