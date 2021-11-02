@@ -216,7 +216,12 @@ class AddExpense extends StatelessWidget {
                                           padding: const EdgeInsets.only(
                                               left: 24.0, right: 24.0),
                                           child: SfDateRangePicker(
+                                            monthCellStyle:
+                                                DateRangePickerMonthCellStyle(),
                                             headerHeight: 0.0,
+                                            selectionShape:
+                                                DateRangePickerSelectionShape
+                                                    .rectangle,
                                             monthViewSettings:
                                                 const DateRangePickerMonthViewSettings(
                                               firstDayOfWeek: 1,
