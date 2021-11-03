@@ -6,7 +6,9 @@ import 'expense_date_picker.dart';
 
 class ExpenseDatePickerDialog extends StatelessWidget {
   String month;
-  ExpenseDatePickerDialog({required this.month});
+  String year;
+
+  ExpenseDatePickerDialog({required this.month, required this.year});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class ExpenseDatePickerDialog extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      DateTime.now().year.toString(),
+                      year,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: kSecondaryColor,
@@ -61,6 +63,7 @@ class ExpenseDatePickerDialog extends StatelessWidget {
               padding: const EdgeInsets.only(left: 24.0, right: 24.0),
               child: ExpenseDatePicker(
                 month: month,
+                year: year,
               ),
             ),
           ),

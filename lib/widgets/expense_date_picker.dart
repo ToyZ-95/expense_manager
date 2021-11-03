@@ -8,10 +8,11 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ExpenseDatePicker extends StatelessWidget {
   String month;
+  String year;
 
   final DateFormat formatter = DateFormat('EEEE, d MMMM');
 
-  ExpenseDatePicker({required this.month});
+  ExpenseDatePicker({required this.month, required this.year});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,13 @@ class ExpenseDatePicker extends StatelessWidget {
         AddExpenseController addExpenseController = Get.find();
         addExpenseController.expenseDateStringChanged(args.value);
       },
-      minDate: DateTime(DateTime.now().year, expenseDate.month, 1),
-      maxDate: DateTime(DateTime.now().year, expenseDate.month,
-          HelperClass.daysInMonth(DateTime.now())),
+      minDate: DateTime(int.parse(year), expenseDate.month, 1),
+      maxDate: DateTime(
+          int.parse(year),
+          expenseDate.month,
+          HelperClass.daysInMonth(
+            DateTime(int.parse(year), expenseDate.month, 1),
+          )),
       selectionColor: kPrimaryColor,
       selectionTextStyle:
           const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

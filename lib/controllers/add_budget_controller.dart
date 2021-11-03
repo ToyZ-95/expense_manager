@@ -2,9 +2,22 @@ import 'package:get/get.dart';
 
 class AddBudgetController extends GetxController {
   DateTime selectedMonthYear = DateTime.now();
+  double budgetAmount = 0;
+  String extraNote = '';
 
   selectedMonthYearChanged(DateTime changedMonthYear) {
     selectedMonthYear = changedMonthYear;
-    //update();
+    Future.delayed(Duration.zero, () => update());
+  }
+
+  budgetAmountChanged(String changedBudget) {
+    if (changedBudget.isEmpty) return;
+    budgetAmount = double.parse(changedBudget);
+    budgetAmount ??= 0;
+  }
+
+  extraNoteChanged(String changedNote) {
+    if (changedNote.isEmpty) return;
+    extraNote = changedNote;
   }
 }

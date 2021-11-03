@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 
 class AddExpenseController extends GetxController {
   String month;
-  AddExpenseController({required this.month});
+  String year;
+
+  AddExpenseController({required this.month, required this.year});
 
   String expenseDateString = '';
 
@@ -31,7 +33,6 @@ class AddExpenseController extends GetxController {
 
   void expenseNoteChanged(String changedNote) {
     extraNote = changedNote;
-    update();
   }
 
   void expenseDateStringChanged(DateTime changedDate) {
@@ -44,6 +45,5 @@ class AddExpenseController extends GetxController {
     if (changedAmount.isEmpty) return;
     amount = double.parse(changedAmount);
     amount ??= 0;
-    update();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:expense_manager/constants/constants.dart';
+import 'package:expense_manager/controllers/add_budget_controller.dart';
 import 'package:expense_manager/widgets/budget_month_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,26 +15,16 @@ class BudgetMonthPickerDialog extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             child: Row(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      '2019',
-                      style: TextStyle(
-                        letterSpacing: 1.2,
-                        fontSize: 26.0,
-                        fontWeight: FontWeight.bold,
-                        color: kPrimaryColor,
-                      ),
+                GetBuilder<AddBudgetController>(
+                  builder: (value) => Text(
+                    value.selectedMonthYear.year.toString(),
+                    style: const TextStyle(
+                      letterSpacing: 1.2,
+                      fontSize: 26.0,
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryColor,
                     ),
-                    Text(
-                      DateTime.now().year.toString(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: kSecondaryColor,
-                          fontSize: 20.0),
-                    ),
-                  ],
+                  ),
                 ),
                 const Spacer(),
                 IconButton(

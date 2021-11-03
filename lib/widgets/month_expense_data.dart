@@ -42,6 +42,7 @@ class HomeExpenseData extends StatelessWidget {
               () => AddExpense(
                 guid: monthsCardModel.guid!,
                 month: monthsCardModel.monthName!,
+                year: monthsCardModel.year!,
               ),
             );
           },
@@ -93,6 +94,7 @@ class HomeExpenseData extends StatelessWidget {
                         () => AddExpense(
                           guid: monthsCardModel.guid!,
                           month: monthsCardModel.monthName!,
+                          year: monthsCardModel.year!,
                         ),
                       );
                     },

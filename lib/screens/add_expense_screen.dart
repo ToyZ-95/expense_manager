@@ -11,15 +11,13 @@ import 'package:intl/intl.dart';
 class AddExpense extends StatelessWidget {
   HomeController homeController = Get.find();
 
-  TextEditingController amountController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
-
   String guid;
   String month;
+  String year;
 
   final DateFormat formatter = DateFormat('EEEE, d MMMM');
 
-  AddExpense({required this.guid, required this.month});
+  AddExpense({required this.guid, required this.month, required this.year});
 
   void addExpense() {
     Get.back();
@@ -106,7 +104,6 @@ class AddExpense extends StatelessWidget {
                       addExpenseController.amountChanged(value);
                     },
                     cursorColor: kPrimaryColor,
-                    controller: amountController,
                     style: const TextStyle(
                       color: kPrimaryColor,
                       fontWeight: FontWeight.bold,
@@ -141,7 +138,7 @@ class AddExpense extends StatelessWidget {
                   Row(
                     children: [
                       GetBuilder<AddExpenseController>(
-                        init: AddExpenseController(month: month),
+                        init: AddExpenseController(month: month, year: year),
                         builder: (value) => Text(
                           value.expenseDateString,
                           textScaleFactor: 1.2,
@@ -157,7 +154,10 @@ class AddExpense extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (builder) {
-                                return ExpenseDatePickerDialog(month: month);
+                                return ExpenseDatePickerDialog(
+                                  month: month,
+                                  year: year,
+                                );
                               });
                         },
                         icon: const Icon(
@@ -207,7 +207,6 @@ class AddExpense extends StatelessWidget {
                     height: 20.0,
                   ),
                   TextField(
-                    controller: noteController,
                     onChanged: (value) {
                       AddExpenseController addExpenseController = Get.find();
                       addExpenseController.expenseNoteChanged(value);

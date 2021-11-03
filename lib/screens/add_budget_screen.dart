@@ -3,25 +3,27 @@ import 'package:expense_manager/controllers/add_budget_controller.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/models/home_model.dart';
 import 'package:expense_manager/widgets/budget_month_picker_dialog.dart';
-import 'package:expense_manager/widgets/expense_date_picker_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AddBudget extends StatelessWidget {
-  TextEditingController amountController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
-
   HomeController homeController = Get.find();
 
   final DateFormat formatter = DateFormat('MMMM,y');
 
-  void addBudget(String dateTime) {
+  void addBudget() {
+    AddBudgetController addBudgetController = Get.find();
+
     homeController.addMonthsCard(
       MonthsCardModel(
-        monthName: dateTime.split(',')[0],
-        year: dateTime.split(',')[1],
-        budget: double.parse(amountController.text),
+        monthName: formatter
+            .format(addBudgetController.selectedMonthYear)
+            .split(',')[0],
+        year: formatter
+            .format(addBudgetController.selectedMonthYear)
+            .split(',')[1],
+        budget: addBudgetController.budgetAmount,
       ),
     );
     Get.back();
@@ -29,8 +31,6 @@ class AddBudget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String dateTime = formatter.format(DateTime.now());
-
     return Scaffold(
       body: SingleChildScrollView(
         // physics: const BouncingScrollPhysics(),
@@ -81,8 +81,11 @@ class AddBudget extends StatelessWidget {
                     height: 16.0,
                   ),
                   TextField(
+                    onChanged: (value) {
+                      AddBudgetController addBudgetController = Get.find();
+                      addBudgetController.budgetAmountChanged(value);
+                    },
                     cursorColor: kPrimaryColor,
-                    controller: amountController,
                     style: const TextStyle(
                       color: kPrimaryColor,
                       fontWeight: FontWeight.bold,
@@ -164,7 +167,10 @@ class AddBudget extends StatelessWidget {
                     height: 20.0,
                   ),
                   TextField(
-                    controller: noteController,
+                    onChanged: (value) {
+                      AddBudgetController addBudgetController = Get.find();
+                      addBudgetController.extraNoteChanged(value);
+                    },
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     minLines: 8,
@@ -202,7 +208,7 @@ class AddBudget extends StatelessWidget {
                         left: 18.0, right: 18.0, bottom: 30.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        addBudget(dateTime);
+                        addBudget();
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const RoundedRectangleBorder(
