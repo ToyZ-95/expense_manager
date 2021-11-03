@@ -6,6 +6,8 @@ class AddExpenseController extends GetxController {
   AddExpenseController({required this.month});
 
   String expenseDateString = '';
+  DateTime? expenseDate;
+
   final DateFormat formatter = DateFormat('EEEE, d MMMM');
 
   @override
@@ -17,6 +19,7 @@ class AddExpenseController extends GetxController {
   }
 
   void expenseDateStringChanged(DateTime changedDate) {
+    expenseDate = changedDate;
     expenseDateString = formatter.format(changedDate);
     update();
   }

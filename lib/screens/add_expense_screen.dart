@@ -3,6 +3,8 @@ import 'package:expense_manager/controllers/add_expense_controller.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/expense_model.dart';
+import 'package:expense_manager/widgets/expense_date_picker.dart';
+import 'package:expense_manager/widgets/expense_date_picker_dialog.dart';
 import 'package:expense_manager/widgets/selectable_tile_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,11 +49,6 @@ class AddExpense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String dateString =
-        '${DateFormat('EEEE').format(DateTime.now())}, ${DateTime.now().day} ${month}';
-
-    DateTime expenseDate = formatter.parse(dateString);
-
     return Scaffold(
       body: SingleChildScrollView(
         // physics: const BouncingScrollPhysics(
@@ -159,104 +156,8 @@ class AddExpense extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (builder) {
-                                return Material(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.only(
-                                            top: 50.0, left: 24.0, right: 24.0),
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Row(
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  month,
-                                                  style: const TextStyle(
-                                                    letterSpacing: 1.2,
-                                                    fontSize: 26.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kPrimaryColor,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  DateTime.now()
-                                                      .year
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: kSecondaryColor,
-                                                      fontSize: 20.0),
-                                                ),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            IconButton(
-                                              onPressed: () {
-                                                Get.back();
-                                              },
-                                              icon: const Icon(
-                                                Icons.close_rounded,
-                                                size: 30.0,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 40.0,
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          padding: const EdgeInsets.only(
-                                              left: 24.0, right: 24.0),
-                                          child: SfDateRangePicker(
-                                            monthCellStyle:
-                                                DateRangePickerMonthCellStyle(),
-                                            headerHeight: 0.0,
-                                            selectionShape:
-                                                DateRangePickerSelectionShape
-                                                    .rectangle,
-                                            monthViewSettings:
-                                                const DateRangePickerMonthViewSettings(
-                                              firstDayOfWeek: 1,
-                                              viewHeaderStyle:
-                                                  DateRangePickerViewHeaderStyle(
-                                                textStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20.0,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
+                                return ExpenseDatePickerDialog(month: month);
                               });
-                          // DateTime? picked = await showDatePicker(
-                          //   context: context,
-                          //   initialDate: DateTime(
-                          //       DateTime.now().year, expenseDate.month, 1),
-                          //   firstDate: DateTime(
-                          //       DateTime.now().year, expenseDate.month, 1),
-                          //   lastDate: DateTime(DateTime.now().year,
-                          //       expenseDate.month, daysInMonth(DateTime.now())),
-                          // );
-
-                          // if (picked != null) {
-                          //   AddExpenseController addExpenseController =
-                          //       Get.find();
-                          //   addExpenseController
-                          //       .expenseDateStringChanged(picked);
-                          // }
                         },
                         icon: const Icon(
                           Icons.calendar_today_rounded,
