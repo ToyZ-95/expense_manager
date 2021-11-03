@@ -1,5 +1,6 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/add_expense_controller.dart';
+import 'package:expense_manager/utilities/helper_class.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -11,13 +12,6 @@ class ExpenseDatePicker extends StatelessWidget {
   final DateFormat formatter = DateFormat('EEEE, d MMMM');
 
   ExpenseDatePicker({required this.month});
-
-  int daysInMonth(DateTime date) {
-    var firstDayThisMonth = DateTime(date.year, date.month, date.day);
-    var firstDayNextMonth = DateTime(firstDayThisMonth.year,
-        firstDayThisMonth.month + 1, firstDayThisMonth.day);
-    return firstDayNextMonth.difference(firstDayThisMonth).inDays;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +26,8 @@ class ExpenseDatePicker extends StatelessWidget {
         addExpenseController.expenseDateStringChanged(args.value);
       },
       minDate: DateTime(DateTime.now().year, expenseDate.month, 1),
-      maxDate: DateTime(
-          DateTime.now().year, expenseDate.month, daysInMonth(DateTime.now())),
+      maxDate: DateTime(DateTime.now().year, expenseDate.month,
+          HelperClass.daysInMonth(DateTime.now())),
       selectionColor: kPrimaryColor,
       selectionTextStyle:
           const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

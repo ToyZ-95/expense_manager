@@ -1,6 +1,7 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/utilities/helper_class.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -106,17 +107,13 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                       ),
                     ),
                     minX: 1,
-                    maxX: homeController
-                        .getLatestExpenseDay(monthsCardModel)
-                        .toDouble(),
+                    maxX: 31,
                     minY: 0,
                     maxY: homeController
                         .getHighestExpenseInMonth(monthsCardModel),
                     lineBarsData: [
                       LineChartBarData(
-                        spots: getFlSpots(
-                          homeController.getLatestExpenseDay(monthsCardModel),
-                        ),
+                        spots: getFlSpots(31),
                         isCurved: true,
                         colors: <Color>[kPrimaryColor, kPrimaryColor],
                         barWidth: 2,

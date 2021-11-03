@@ -1,7 +1,6 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/add_expense_controller.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
-import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/widgets/expense_date_picker_dialog.dart';
 import 'package:expense_manager/widgets/selectable_tile_grid.dart';
@@ -20,22 +19,22 @@ class AddExpense extends StatelessWidget {
 
   final DateFormat formatter = DateFormat('EEEE, d MMMM');
 
-  static ExpenseCategory? selectedCategory;
-
   AddExpense({required this.guid, required this.month});
 
   void addExpense() {
     Get.back();
+    AddExpenseController addExpenseController = Get.find();
     homeController.addExpense(
       guid,
       ExpenseModel(
-          expenseName:
-              selectedCategory.toString().split('.')[1].capitalizeFirst,
-          amount: double.parse(amountController.text),
-          timeStamp: DateTime.now().toString(),
-          category: selectedCategory),
+          expenseName: addExpenseController.category
+              .toString()
+              .split('.')[1]
+              .capitalizeFirst,
+          amount: addExpenseController.amount,
+          timeStamp: addExpenseController.expenseDate.toString(),
+          category: addExpenseController.category),
     );
-    selectedCategory = null;
   }
 
   int daysInMonth(DateTime date) {
@@ -102,7 +101,10 @@ class AddExpense extends StatelessWidget {
                     height: 16.0,
                   ),
                   TextField(
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      AddExpenseController addExpenseController = Get.find();
+                      addExpenseController.amountChanged(value);
+                    },
                     cursorColor: kPrimaryColor,
                     controller: amountController,
                     style: const TextStyle(
@@ -206,6 +208,10 @@ class AddExpense extends StatelessWidget {
                   ),
                   TextField(
                     controller: noteController,
+                    onChanged: (value) {
+                      AddExpenseController addExpenseController = Get.find();
+                      addExpenseController.expenseNoteChanged(value);
+                    },
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     minLines: 8,

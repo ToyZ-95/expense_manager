@@ -24,18 +24,13 @@ class AddExpenseController extends GetxController {
     super.onInit();
   }
 
-  void expenseNameChanged(String changedAmount) {
-    amount = double.parse(changedAmount);
+  void expenseCategoryChanged(ExpenseCategory selectedCategory) {
+    category = selectedCategory;
     update();
   }
 
-  void expenseCategoryChanged(String changedAmount) {
-    amount = double.parse(changedAmount);
-    update();
-  }
-
-  void expenseNoteChanged(String changedAmount) {
-    amount = double.parse(changedAmount);
+  void expenseNoteChanged(String changedNote) {
+    extraNote = changedNote;
     update();
   }
 
@@ -46,7 +41,9 @@ class AddExpenseController extends GetxController {
   }
 
   void amountChanged(String changedAmount) {
+    if (changedAmount.isEmpty) return;
     amount = double.parse(changedAmount);
+    amount ??= 0;
     update();
   }
 }
