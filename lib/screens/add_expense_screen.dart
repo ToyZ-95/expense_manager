@@ -5,6 +5,7 @@ import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/widgets/expense_date_picker_dialog.dart';
 import 'package:expense_manager/widgets/selectable_tile_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -20,8 +21,20 @@ class AddExpense extends StatelessWidget {
   AddExpense({required this.guid, required this.month, required this.year});
 
   void addExpense() {
-    Get.back();
     AddExpenseController addExpenseController = Get.find();
+    if (addExpenseController.expenseDate == null) {
+      Fluttertoast.showToast(
+          msg: 'Select a date please!!!',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return;
+    }
+    Get.back();
+
     homeController.addExpense(
       guid,
       ExpenseModel(
