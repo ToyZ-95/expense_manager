@@ -1,6 +1,9 @@
 import 'package:expense_manager/constants/constants.dart';
+import 'package:expense_manager/controllers/add_budget_controller.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/widgets/budget_month_picker_dialog.dart';
+import 'package:expense_manager/widgets/expense_date_picker_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -113,17 +116,27 @@ class AddBudget extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text(
-                        dateTime,
-                        textScaleFactor: 1.2,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: kPrimaryColor,
+                      GetBuilder<AddBudgetController>(
+                        init: AddBudgetController(),
+                        builder: (value) => Text(
+                          formatter.format(value.selectedMonthYear),
+                          textScaleFactor: 1.2,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: kPrimaryColor,
+                          ),
                         ),
                       ),
                       const Spacer(),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (builder) {
+                              return BudgetMonthPickerDialog();
+                            },
+                          );
+                        },
                         icon: const Icon(
                           Icons.calendar_today_rounded,
                           color: kSecondaryColor,

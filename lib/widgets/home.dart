@@ -1,6 +1,6 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
-import 'package:expense_manager/screens/add_budget.dart';
+import 'package:expense_manager/screens/add_budget_screen.dart';
 import 'package:expense_manager/widgets/month_expense_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

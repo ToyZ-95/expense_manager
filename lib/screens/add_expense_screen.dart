@@ -153,7 +153,7 @@ class AddExpense extends StatelessWidget {
                       ),
                       const Spacer(),
                       IconButton(
-                        onPressed: () async {
+                        onPressed: () {
                           showDialog(
                               context: context,
                               builder: (builder) {
