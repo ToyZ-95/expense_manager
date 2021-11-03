@@ -3,13 +3,11 @@ import 'package:expense_manager/controllers/add_expense_controller.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/expense_model.dart';
-import 'package:expense_manager/widgets/expense_date_picker.dart';
 import 'package:expense_manager/widgets/expense_date_picker_dialog.dart';
 import 'package:expense_manager/widgets/selectable_tile_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class AddExpense extends StatelessWidget {
   HomeController homeController = Get.find();
@@ -104,6 +102,7 @@ class AddExpense extends StatelessWidget {
                     height: 16.0,
                   ),
                   TextField(
+                    onChanged: (value) {},
                     cursorColor: kPrimaryColor,
                     controller: amountController,
                     style: const TextStyle(

@@ -117,7 +117,7 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                         spots: getFlSpots(
                           homeController.getLatestExpenseDay(monthsCardModel),
                         ),
-                        isCurved: false,
+                        isCurved: true,
                         colors: <Color>[kPrimaryColor, kPrimaryColor],
                         barWidth: 2,
                         isStrokeCapRound: true,
@@ -125,7 +125,7 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
                           show: true,
                         ),
                         belowBarData: BarAreaData(
-                          show: true,
+                          show: false,
                           colors: [kSecondaryColor, kPrimaryColor]
                               .map(
                                 (color) => color.withOpacity(0.3),
