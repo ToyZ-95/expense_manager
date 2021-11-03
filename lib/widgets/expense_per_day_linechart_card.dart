@@ -46,7 +46,6 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       width: MediaQuery.of(context).size.width - 10,
       height: MediaQuery.of(context).size.height / 2,
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Column(
         children: [
           const Text(
@@ -62,13 +61,23 @@ class ExpensePerDayLineChartCard extends StatelessWidget {
           ),
           Expanded(
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               child: Container(
                 width: MediaQuery.of(context).size.width * 2.5,
                 padding: const EdgeInsets.only(
-                    left: 40, right: 40, bottom: 10.0, top: 60),
+                    left: 10, right: 10, bottom: 10.0, top: 10),
                 child: LineChart(
                   LineChartData(
+                    lineTouchData: LineTouchData(
+                      handleBuiltInTouches: true,
+                      touchTooltipData: LineTouchTooltipData(
+                        fitInsideHorizontally: true,
+                        fitInsideVertically: true,
+                        tooltipBgColor: Colors.white70,
+                        tooltipRoundedRadius: 10.0,
+                      ),
+                    ),
                     gridData: FlGridData(
                       show: true,
                       drawVerticalLine: true,
