@@ -28,6 +28,17 @@
 <img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/ExpenseLog.jpg?raw=true" width="200" height="400"/>
 <img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/General_1.jpg?raw=true" width="200" height="400"/>
 <img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/General_2.jpg?raw=true" width="200" height="400"/>
- 
-
 </Span>
+
+### Column Name
+- [x] Login | Signup using firebase
+- [x] Add Budget
+- [x] Add Expense
+- [x] View Homescreen
+- [x] View Expense Log For Particular Month
+- [x] View Remaining Budget And Expense Per Day Charts For Particular Month
+- [ ] Compare Two Different Months
+- [ ] Add More Charts
+- [ ] Add Filters
+- [ ] Update Data To Firestore
+
