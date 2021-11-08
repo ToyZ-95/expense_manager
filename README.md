@@ -1,5 +1,5 @@
-<h1>expense_manager</h1>
-<h2>Expense tracker created in flutter with firebase</h2>
+<h1>Expense Manager</h1>
+<h2>Expense tracker app created in flutter with firebase</h2>
 
 <h3>Login | Sign Up</h3>
 <Span>
