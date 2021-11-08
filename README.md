@@ -35,10 +35,10 @@
 - [x] Add Budget
 - [x] Add Expense
 - [x] View Homescreen
-- [x] View Expense Log For Particular Month
-- [x] View Remaining Budget And Expense Per Day Charts For Particular Month
+- [x] View expense log of particular month
+- [x] View remaining budget and expense per/day charts of particular month
 - [ ] Compare Two Different Months
-- [ ] Add More Charts
-- [ ] Add Filters
-- [ ] Update Data To Firestore
-
+- [ ] Add more charts
+- [ ] Add filters
+- [ ] Update data to firestore
+- [ ] And much more coming soon!!!
