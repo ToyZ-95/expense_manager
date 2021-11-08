@@ -30,7 +30,7 @@
 <img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/General_2.jpg?raw=true" width="200" height="400"/>
 </Span>
 
-### Column Name
+### TODO For This App
 - [x] Login | Signup using firebase
 - [x] Add Budget
 - [x] Add Expense
