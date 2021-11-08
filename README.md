@@ -6,7 +6,7 @@
 <img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/Login.jpg?raw=true" width="200" height="400"/>
 <img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/SignUP.jpg?raw=true" width="200" height="400"/>
 </Span>
-<h3>HomeScreen</h3>
+<h3>Homescreen</h3>
 <Span>
 <img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/HomeScreen_1.jpg?raw=true" width="200" height="400"/>
 <img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/HomeScreen_2.jpg?raw=true" width="200" height="400"/>
