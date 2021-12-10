@@ -1,6 +1,6 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
-import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/models/budget_model.dart';
 import 'package:expense_manager/utilities/helper_class.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';

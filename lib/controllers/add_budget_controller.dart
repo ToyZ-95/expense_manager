@@ -13,7 +13,7 @@ class AddBudgetController extends GetxController {
   budgetAmountChanged(String changedBudget) {
     if (changedBudget.isEmpty) return;
     budgetAmount = double.parse(changedBudget);
-    budgetAmount ??= 0;
+    budgetAmount;
   }
 
   extraNoteChanged(String changedNote) {

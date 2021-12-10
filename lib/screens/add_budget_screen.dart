@@ -1,7 +1,7 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/add_budget_controller.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
-import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/models/budget_model.dart';
 import 'package:expense_manager/widgets/budget_month_picker_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +16,7 @@ class AddBudget extends StatelessWidget {
     AddBudgetController addBudgetController = Get.find();
 
     homeController.addMonthsCard(
-      MonthsCardModel(
+      BudgetModel(
         monthName: formatter
             .format(addBudgetController.selectedMonthYear)
             .split(',')[0],

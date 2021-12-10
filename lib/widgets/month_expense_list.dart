@@ -1,5 +1,5 @@
 import 'package:expense_manager/models/expense_model.dart';
-import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/models/budget_model.dart';
 import 'package:expense_manager/widgets/expense_date_card.dart';
 import 'package:expense_manager/widgets/expense_details_card.dart';
 import 'package:flutter/material.dart';

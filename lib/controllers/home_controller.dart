@@ -1,12 +1,13 @@
 import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/expense_model.dart';
-import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/models/budget_model.dart';
+import 'package:expense_manager/services/database.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   //Using rx list to get access refresh() when any changes occurs in list
   //e.g. adding expense to list
-  RxList<MonthsCardModel> monthsCards = <MonthsCardModel>[].obs;
+  RxList<BudgetModel> budgetsModels = <BudgetModel>[].obs;
 
   @override
   void onInit() {
@@ -14,27 +15,29 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  void addMonthsCard(MonthsCardModel monthsCardModel) =>
-      monthsCards.add(monthsCardModel);
+  void addMonthsCard(BudgetModel budgetModel) => () async {
+        await DBProvider.db.insertBudget(budgetModel);
+        budgetsModels.add(budgetModel);
+      };
 
-  void removeMonthsCard(MonthsCardModel monthsCardModel) =>
-      monthsCards.remove(monthsCardModel);
+  void removeMonthsCard(BudgetModel monthsCardModel) =>
+      budgetsModels.remove(monthsCardModel);
 
-  void addExpense(String guid, ExpenseModel expenseModel) {
-    MonthsCardModel monthCardModel =
-        monthsCards.firstWhere((element) => element.guid == guid);
+  void addExpense(int id, ExpenseModel expenseModel) {
+    BudgetModel monthCardModel =
+        budgetsModels.firstWhere((element) => element.id == id);
     if (monthCardModel.expenses != null) {
       monthCardModel.expenses!.add(expenseModel);
     } else {
       monthCardModel.expenses = [expenseModel];
     }
-    monthsCards.refresh();
+    budgetsModels.refresh();
   }
 
-  MonthsCardModel getMonthModel(String guid) =>
-      monthsCards.firstWhere((element) => element.guid == guid);
+  BudgetModel getMonthModel(int id) =>
+      budgetsModels.firstWhere((element) => element.id == id);
 
-  double getTotalExpenses(MonthsCardModel monthsCardModel) {
+  double getTotalExpenses(BudgetModel monthsCardModel) {
     double expensesNum = 0;
     if (monthsCardModel.expenses != null) {
       for (ExpenseModel item in monthsCardModel.expenses!) {
@@ -45,20 +48,20 @@ class HomeController extends GetxController {
     return expensesNum;
   }
 
-  double getBudget(MonthsCardModel monthsCardModel) => monthsCardModel.budget!;
+  double getBudget(BudgetModel monthsCardModel) => monthsCardModel.budget!;
 
-  double getRemainingBudget(MonthsCardModel monthsCardModel) =>
+  double getRemainingBudget(BudgetModel monthsCardModel) =>
       getBudget(monthsCardModel) - getTotalExpenses(monthsCardModel);
 
-  String getExpensePercent(MonthsCardModel monthsCardModel) =>
+  String getExpensePercent(BudgetModel monthsCardModel) =>
       (getTotalExpenses(monthsCardModel) * 100 / getBudget(monthsCardModel))
           .toStringAsFixed(2);
 
-  String getRemainingPercent(MonthsCardModel monthsCardModel) =>
+  String getRemainingPercent(BudgetModel monthsCardModel) =>
       ((getRemainingBudget(monthsCardModel) * 100) / getBudget(monthsCardModel))
           .toStringAsFixed(2);
 
-  double getHighestExpenseInMonth(MonthsCardModel monthsCardModel) {
+  double getHighestExpenseInMonth(BudgetModel monthsCardModel) {
     //Take expense list from model
     List<ExpenseModel> expenses = monthsCardModel.expenses!;
 
@@ -92,7 +95,7 @@ class HomeController extends GetxController {
     return highestExpense;
   }
 
-  double getPerDayExpenses(MonthsCardModel monthsCardModel, int day) {
+  double getPerDayExpenses(BudgetModel monthsCardModel, int day) {
     double amount = 0;
 
     List<ExpenseModel> expenses = monthsCardModel.expenses!
@@ -106,7 +109,7 @@ class HomeController extends GetxController {
     return amount;
   }
 
-  int getLatestExpenseDay(MonthsCardModel monthsCardModel) {
+  int getLatestExpenseDay(BudgetModel monthsCardModel) {
     int day = 0;
 
     //Take expense list from model
@@ -122,119 +125,119 @@ class HomeController extends GetxController {
     return day;
   }
 
-  void getDummyData() {
-    List<MonthsCardModel> list = [];
+  // void getDummyData() {
+  //   List<BudgetModel> list = [];
 
-    list.add(
-      MonthsCardModel(
-        monthName: 'September',
-        year: '2019',
-        budget: 60000,
-        expenses: <ExpenseModel>[
-          ExpenseModel(
-              amount: 5000,
-              category: ExpenseCategory.clothes,
-              expenseName: 'Clothes',
-              timeStamp: DateTime.parse('2019-09-05').toString()),
-          ExpenseModel(
-              amount: 1000,
-              category: ExpenseCategory.bills,
-              expenseName: 'Bills',
-              timeStamp: DateTime.parse('2019-09-01').toString()),
-          ExpenseModel(
-              amount: 2000,
-              category: ExpenseCategory.fun,
-              expenseName: 'Fun',
-              timeStamp: DateTime.parse('2019-09-05').toString()),
-          ExpenseModel(
-              amount: 5000,
-              category: ExpenseCategory.clothes,
-              expenseName: 'Clothes',
-              timeStamp: DateTime.parse('2019-09-01').toString()),
-          ExpenseModel(
-              amount: 6000,
-              category: ExpenseCategory.fun,
-              expenseName: 'Fun',
-              timeStamp: DateTime.parse('2019-09-02').toString()),
-          ExpenseModel(
-              amount: 2000,
-              category: ExpenseCategory.other,
-              expenseName: 'Other',
-              timeStamp: DateTime.parse('2019-09-02').toString()),
-          ExpenseModel(
-              amount: 500,
-              category: ExpenseCategory.transport,
-              expenseName: 'Transport',
-              timeStamp: DateTime.parse('2019-09-05').toString()),
-          ExpenseModel(
-              amount: 100,
-              category: ExpenseCategory.food,
-              expenseName: 'Food',
-              timeStamp: DateTime.parse('2019-09-05').toString()),
-          ExpenseModel(
-              amount: 7000,
-              category: ExpenseCategory.transport,
-              expenseName: 'Transport',
-              timeStamp: DateTime.parse('2019-09-08').toString()),
-          ExpenseModel(
-              amount: 5000,
-              category: ExpenseCategory.other,
-              expenseName: 'Other',
-              timeStamp: DateTime.parse('2019-09-08').toString()),
-          ExpenseModel(
-              amount: 3000,
-              category: ExpenseCategory.fun,
-              expenseName: 'Fun',
-              timeStamp: DateTime.parse('2019-09-10').toString()),
-          ExpenseModel(
-              amount: 2000,
-              category: ExpenseCategory.food,
-              expenseName: 'Food',
-              timeStamp: DateTime.parse('2019-09-13').toString()),
-          ExpenseModel(
-              amount: 1000,
-              category: ExpenseCategory.fun,
-              expenseName: 'Fun',
-              timeStamp: DateTime.parse('2019-09-19').toString()),
-          ExpenseModel(
-              amount: 9000,
-              category: ExpenseCategory.bills,
-              expenseName: 'Bills',
-              timeStamp: DateTime.parse('2019-09-13').toString()),
-          ExpenseModel(
-              amount: 4000,
-              category: ExpenseCategory.other,
-              expenseName: 'Other',
-              timeStamp: DateTime.parse('2019-09-13').toString()),
-          ExpenseModel(
-              amount: 3000,
-              category: ExpenseCategory.food,
-              expenseName: 'Food',
-              timeStamp: DateTime.parse('2019-09-19').toString()),
-          ExpenseModel(
-              amount: 100,
-              category: ExpenseCategory.transport,
-              expenseName: 'Transport',
-              timeStamp: DateTime.parse('2019-09-22').toString()),
-          ExpenseModel(
-              amount: 500,
-              category: ExpenseCategory.food,
-              expenseName: 'Food',
-              timeStamp: DateTime.parse('2019-09-22').toString()),
-          // ExpenseModel(
-          //     amount: 1000,
-          //     category: ExpenseCategory.other,
-          //     expenseName: 'Other',
-          //     timeStamp: DateTime.parse('2019-09-29').toString()),
-          // ExpenseModel(
-          //     amount: 1000,
-          //     category: ExpenseCategory.bills,
-          //     expenseName: 'Bills',
-          //     timeStamp: DateTime.parse('2019-09-30').toString()),
-        ],
-      ),
-    );
+  //   list.add(
+  //     BudgetModel(
+  //       monthName: 'September',
+  //       year: '2019',
+  //       budget: 60000,
+  //       expenses: <ExpenseModel>[
+  //         ExpenseModel(
+  //             amount: 5000,
+  //             category: ExpenseCategory.clothes,
+  //             expenseName: 'Clothes',
+  //             timeStamp: DateTime.parse('2019-09-05').toString()),
+  //         ExpenseModel(
+  //             amount: 1000,
+  //             category: ExpenseCategory.bills,
+  //             expenseName: 'Bills',
+  //             timeStamp: DateTime.parse('2019-09-01').toString()),
+  //         ExpenseModel(
+  //             amount: 2000,
+  //             category: ExpenseCategory.fun,
+  //             expenseName: 'Fun',
+  //             timeStamp: DateTime.parse('2019-09-05').toString()),
+  //         ExpenseModel(
+  //             amount: 5000,
+  //             category: ExpenseCategory.clothes,
+  //             expenseName: 'Clothes',
+  //             timeStamp: DateTime.parse('2019-09-01').toString()),
+  //         ExpenseModel(
+  //             amount: 6000,
+  //             category: ExpenseCategory.fun,
+  //             expenseName: 'Fun',
+  //             timeStamp: DateTime.parse('2019-09-02').toString()),
+  //         ExpenseModel(
+  //             amount: 2000,
+  //             category: ExpenseCategory.other,
+  //             expenseName: 'Other',
+  //             timeStamp: DateTime.parse('2019-09-02').toString()),
+  //         ExpenseModel(
+  //             amount: 500,
+  //             category: ExpenseCategory.transport,
+  //             expenseName: 'Transport',
+  //             timeStamp: DateTime.parse('2019-09-05').toString()),
+  //         ExpenseModel(
+  //             amount: 100,
+  //             category: ExpenseCategory.food,
+  //             expenseName: 'Food',
+  //             timeStamp: DateTime.parse('2019-09-05').toString()),
+  //         ExpenseModel(
+  //             amount: 7000,
+  //             category: ExpenseCategory.transport,
+  //             expenseName: 'Transport',
+  //             timeStamp: DateTime.parse('2019-09-08').toString()),
+  //         ExpenseModel(
+  //             amount: 5000,
+  //             category: ExpenseCategory.other,
+  //             expenseName: 'Other',
+  //             timeStamp: DateTime.parse('2019-09-08').toString()),
+  //         ExpenseModel(
+  //             amount: 3000,
+  //             category: ExpenseCategory.fun,
+  //             expenseName: 'Fun',
+  //             timeStamp: DateTime.parse('2019-09-10').toString()),
+  //         ExpenseModel(
+  //             amount: 2000,
+  //             category: ExpenseCategory.food,
+  //             expenseName: 'Food',
+  //             timeStamp: DateTime.parse('2019-09-13').toString()),
+  //         ExpenseModel(
+  //             amount: 1000,
+  //             category: ExpenseCategory.fun,
+  //             expenseName: 'Fun',
+  //             timeStamp: DateTime.parse('2019-09-19').toString()),
+  //         ExpenseModel(
+  //             amount: 9000,
+  //             category: ExpenseCategory.bills,
+  //             expenseName: 'Bills',
+  //             timeStamp: DateTime.parse('2019-09-13').toString()),
+  //         ExpenseModel(
+  //             amount: 4000,
+  //             category: ExpenseCategory.other,
+  //             expenseName: 'Other',
+  //             timeStamp: DateTime.parse('2019-09-13').toString()),
+  //         ExpenseModel(
+  //             amount: 3000,
+  //             category: ExpenseCategory.food,
+  //             expenseName: 'Food',
+  //             timeStamp: DateTime.parse('2019-09-19').toString()),
+  //         ExpenseModel(
+  //             amount: 100,
+  //             category: ExpenseCategory.transport,
+  //             expenseName: 'Transport',
+  //             timeStamp: DateTime.parse('2019-09-22').toString()),
+  //         ExpenseModel(
+  //             amount: 500,
+  //             category: ExpenseCategory.food,
+  //             expenseName: 'Food',
+  //             timeStamp: DateTime.parse('2019-09-22').toString()),
+  //         // ExpenseModel(
+  //         //     amount: 1000,
+  //         //     category: ExpenseCategory.other,
+  //         //     expenseName: 'Other',
+  //         //     timeStamp: DateTime.parse('2019-09-29').toString()),
+  //         // ExpenseModel(
+  //         //     amount: 1000,
+  //         //     category: ExpenseCategory.bills,
+  //         //     expenseName: 'Bills',
+  //         //     timeStamp: DateTime.parse('2019-09-30').toString()),
+  //       ],
+  //     ),
+  //   );
 
-    monthsCards.value = list;
-  }
+  //   monthsCards.value = list;
+  // }
 }

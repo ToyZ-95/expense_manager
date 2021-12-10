@@ -1,7 +1,7 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/controllers/stats_controller.dart';
-import 'package:expense_manager/models/home_model.dart';
+import 'package:expense_manager/models/budget_model.dart';
 import 'package:expense_manager/widgets/expense_per_day_linechart_card.dart';
 import 'package:expense_manager/widgets/month_expense_list.dart';
 import 'package:expense_manager/widgets/remaining_expense_pie_chart_card.dart';
