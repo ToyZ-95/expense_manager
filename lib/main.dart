@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        // fontFamily: GoogleFonts.mulish().fontFamily,
-        fontFamily: GoogleFonts.workSans().fontFamily,
+        fontFamily: GoogleFonts.mulish().fontFamily,
+        // fontFamily: GoogleFonts.workSans().fontFamily,
       ),
       home: MyHomePage(),
       //home: const HomeScreen(),

@@ -1,6 +1,7 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/screens/add_budget_screen.dart';
+import 'package:expense_manager/services/database.dart';
 import 'package:expense_manager/widgets/month_expense_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,15 @@ class Home extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
 
   final PageController pageController = PageController(initialPage: 0);
+
+  Home() {
+    fetchAllBudgets();
+  }
+
+  void fetchAllBudgets() async {
+    homeController.budgetsModels.value = await DBProvider.db.getAllBudgets();
+  }
+
   @override
   Widget build(BuildContext context) {
     //homeController.getDummyData();

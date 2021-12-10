@@ -62,6 +62,46 @@ class DBProvider {
         'VALUES (${expense.monthId},${expense.expenseName},${expense.amount},${expense.note},${expense.timeStamp},${expense.category})');
   }
 
+  Future<List<BudgetModel>> getAllBudgets() async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query('Budgets');
+
+    return List.generate(maps.length, (i) {
+      return BudgetModel(
+          id: maps[i]['ID'],
+          monthName: maps[i]['Month_Name'],
+          year: maps[i]['Year'].toString(),
+          budget: maps[i]['Budget']);
+    });
+  }
+
+  Future<List<ExpenseModel>> getExpensesFromMonthId(int id) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps =
+        await db.query('Expenses', where: 'Month_ID = ?', whereArgs: [id]);
+
+    return List.generate(maps.length, (i) {
+      return ExpenseModel(
+          monthId: maps[i]['Month_ID'],
+          expenseName: maps[i]['Expense_Name'],
+          amount: maps[i]['Amount'],
+          note: maps[i]['Note'],
+          timeStamp: maps[i]['TimeStamp'],
+          category: maps[i]['Category']);
+    });
+  }
+
+  Future<double> getTotalExpensesOfMonth(int monthId) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery(
+        'SELECT SUM(Amount) as TotalExpense FROM Expenses WHERE Month_ID = $monthId');
+
+    return double.parse(maps[0]['TotalExpense']);
+  }
+
   Future<int> getLastInsertedID() async {
     final db = await database;
 

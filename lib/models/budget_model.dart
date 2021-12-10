@@ -5,14 +5,12 @@ class BudgetModel {
   String? monthName;
   String? year;
   double? budget;
-  List<ExpenseModel>? expenses;
 
   BudgetModel({
     this.id,
     required this.monthName,
     this.budget,
     this.year,
-    this.expenses,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,7 +18,7 @@ class BudgetModel {
       "ID": id,
       "Month_Name": monthName,
       "Year": year,
-      "Budget": expenses,
+      "Budget": budget,
     };
   }
 }

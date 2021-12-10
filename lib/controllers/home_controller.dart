@@ -1,4 +1,3 @@
-import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/budget_model.dart';
 import 'package:expense_manager/services/database.dart';
@@ -24,46 +23,62 @@ class HomeController extends GetxController {
       budgetsModels.remove(monthsCardModel);
 
   void addExpense(ExpenseModel expenseModel) {
-    BudgetModel monthCardModel = budgetsModels
-        .firstWhere((element) => element.id == expenseModel.monthId);
-    if (monthCardModel.expenses != null) {
-      monthCardModel.expenses!.add(expenseModel);
-    } else {
-      monthCardModel.expenses = [expenseModel];
-    }
-    budgetsModels.refresh();
+    DBProvider.db.insertExpense(expenseModel);
+
+    // BudgetModel budgetModel = budgetsModels
+    //     .firstWhere((element) => element.id == expenseModel.monthId);
+
+    // if (budgetModel.expenses != null) {
+    //   budgetModel.expenses!.add(expenseModel);
+    // } else {
+    //   budgetModel.expenses = [expenseModel];
+    // }
+
+    //budgetsModels.refresh();
   }
 
   BudgetModel getMonthModel(int id) =>
       budgetsModels.firstWhere((element) => element.id == id);
 
-  double getTotalExpenses(BudgetModel monthsCardModel) {
-    double expensesNum = 0;
-    if (monthsCardModel.expenses != null) {
-      for (ExpenseModel item in monthsCardModel.expenses!) {
-        expensesNum += item.amount!;
-      }
-    }
+  Future<double> getTotalExpenses(int monthId) async {
+    double totalExpensesOfMonth =
+        await DBProvider.db.getTotalExpensesOfMonth(monthId);
+    return totalExpensesOfMonth;
+    // double expensesNum = 0;
+    // if (monthsCardModel.expenses != null) {
+    //   for (ExpenseModel item in monthsCardModel.expenses!) {
+    //     expensesNum += item.amount!;
+    //   }
+    // }
 
-    return expensesNum;
+    // return expensesNum;
   }
 
-  double getBudget(BudgetModel monthsCardModel) => monthsCardModel.budget!;
+  double getBudget(BudgetModel budgetModel) => budgetModel.budget!;
 
-  double getRemainingBudget(BudgetModel monthsCardModel) =>
-      getBudget(monthsCardModel) - getTotalExpenses(monthsCardModel);
+  Future<double> getRemainingBudget(BudgetModel budgetModel) async {
+    double budgetOfMonth = getBudget(budgetModel);
+    double totalExpensesOfMonth = await getTotalExpenses(budgetModel.id!);
 
-  String getExpensePercent(BudgetModel monthsCardModel) =>
-      (getTotalExpenses(monthsCardModel) * 100 / getBudget(monthsCardModel))
-          .toStringAsFixed(2);
+    return budgetOfMonth - totalExpensesOfMonth;
+  }
 
-  String getRemainingPercent(BudgetModel monthsCardModel) =>
-      ((getRemainingBudget(monthsCardModel) * 100) / getBudget(monthsCardModel))
-          .toStringAsFixed(2);
+  Future<String> getExpensePercent(BudgetModel budgetModel) async {
+    double totalExpensesOfMonth = await getTotalExpenses(budgetModel.id!) * 100;
+    return (totalExpensesOfMonth / getBudget(budgetModel)).toStringAsFixed(2);
+  }
 
-  double getHighestExpenseInMonth(BudgetModel monthsCardModel) {
+  Future<String> getRemainingPercent(BudgetModel monthsCardModel) async {
+    double remainingBudget = await getRemainingBudget(monthsCardModel) * 100;
+    return (remainingBudget / getBudget(monthsCardModel)).toStringAsFixed(2);
+  }
+
+  Future<double> getHighestExpenseInMonth(BudgetModel budgetModel) async {
     //Take expense list from model
-    List<ExpenseModel> expenses = monthsCardModel.expenses!;
+    // List<ExpenseModel> expenses = monthsCardModel.expenses!;
+
+    List<ExpenseModel> expenses =
+        await DBProvider.db.getExpensesFromMonthId(budgetModel.id!);
 
     //sort expense list as per day
     expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
@@ -95,10 +110,13 @@ class HomeController extends GetxController {
     return highestExpense;
   }
 
-  double getPerDayExpenses(BudgetModel monthsCardModel, int day) {
+  Future<double> getPerDayExpenses(BudgetModel budgetModel, int day) async {
     double amount = 0;
 
-    List<ExpenseModel> expenses = monthsCardModel.expenses!
+    List<ExpenseModel> expenses =
+        await DBProvider.db.getExpensesFromMonthId(budgetModel.id!);
+
+    expenses = expenses
         .where((element) => DateTime.parse(element.timeStamp!).day == day)
         .toList();
 
@@ -109,11 +127,12 @@ class HomeController extends GetxController {
     return amount;
   }
 
-  int getLatestExpenseDay(BudgetModel monthsCardModel) {
+  Future<int> getLatestExpenseDay(BudgetModel budgetModel) async {
     int day = 0;
 
     //Take expense list from model
-    List<ExpenseModel> expenses = monthsCardModel.expenses!;
+    List<ExpenseModel> expenses =
+        await DBProvider.db.getExpensesFromMonthId(budgetModel.id!);
 
     //sort expense list as per day
     expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
