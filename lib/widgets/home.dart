@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
   final PageController pageController = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
-    homeController.getDummyData();
+    //homeController.getDummyData();
 
     return Scaffold(
       body: Column(
@@ -53,12 +53,12 @@ class Home extends StatelessWidget {
               () => PageView.builder(
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
-                itemCount: homeController.monthsCards.length,
+                itemCount: homeController.budgetsModels.length,
                 scrollDirection: Axis.horizontal,
                 controller: pageController,
                 itemBuilder: (context, index) {
                   return HomeExpenseData(
-                    monthsCardModel: homeController.monthsCards[index],
+                    budgetModel: homeController.budgetsModels[index],
                   );
                 },
               ),

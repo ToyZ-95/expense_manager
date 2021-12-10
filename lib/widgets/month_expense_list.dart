@@ -5,12 +5,12 @@ import 'package:expense_manager/widgets/expense_details_card.dart';
 import 'package:flutter/material.dart';
 
 class MonthExpenseList extends StatelessWidget {
-  MonthsCardModel? monthsCardModel;
+  BudgetModel? budgetModel;
   bool? onlyLast = false;
 
-  MonthExpenseList({this.monthsCardModel, this.onlyLast});
+  MonthExpenseList({this.budgetModel, this.onlyLast});
 
-  List<Widget> getWidgets(MonthsCardModel monthsCardModel, bool onlyLast) {
+  List<Widget> getWidgets(BudgetModel monthsCardModel, bool onlyLast) {
 //Take expense list from model
     List<ExpenseModel> expenses = monthsCardModel.expenses!;
 
@@ -72,7 +72,7 @@ class MonthExpenseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: getWidgets(monthsCardModel!, onlyLast!),
+      children: getWidgets(budgetModel!, onlyLast!),
     );
   }
 }

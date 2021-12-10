@@ -9,19 +9,19 @@ import 'package:get/get.dart';
 import 'indicator.dart';
 
 class RemainingExpensePieChartCard extends StatelessWidget {
-  MonthsCardModel monthsCardModel;
+  BudgetModel budgetModel;
   bool editable;
 
   HomeController homeController = Get.find();
 
   RemainingExpensePieChartCard(
-      {required this.monthsCardModel, required this.editable});
+      {required this.budgetModel, required this.editable});
 
   List<Widget> getWidgets(BuildContext context, bool editable) {
     List<Widget> list = [];
     list.add(
       Text(
-        monthsCardModel.monthName!,
+        budgetModel.monthName!,
         style: const TextStyle(
           letterSpacing: 1.2,
           fontSize: 26.0,
@@ -32,7 +32,7 @@ class RemainingExpensePieChartCard extends StatelessWidget {
     );
     list.add(
       Text(
-        monthsCardModel.year!.toString(),
+        budgetModel.year!.toString(),
         style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: kSecondaryColor,
@@ -44,7 +44,7 @@ class RemainingExpensePieChartCard extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             Get.to(() => Stats(
-                  monthsCardModel: monthsCardModel,
+                  budgetModel: budgetModel,
                   selectedTab: 1,
                 ));
           },
@@ -53,20 +53,20 @@ class RemainingExpensePieChartCard extends StatelessWidget {
               centerSpaceRadius: 35.0,
               // read about it in the PieChartData section
               sections: [
-                if (homeController.getTotalExpenses(monthsCardModel) <
-                    homeController.getBudget(monthsCardModel))
+                if (homeController.getTotalExpenses(budgetModel) <
+                    homeController.getBudget(budgetModel))
                   PieChartSectionData(
                     value: double.parse(
-                        homeController.getRemainingPercent(monthsCardModel)),
+                        homeController.getRemainingPercent(budgetModel)),
                     showTitle: false,
                     color: kPrimaryColor,
                     //title: remainingPercent + '%',
                     badgeWidget: Text(
-                      homeController.getRemainingPercent(monthsCardModel) + '%',
+                      homeController.getRemainingPercent(budgetModel) + '%',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     badgePositionPercentageOffset: homeController
-                            .getRemainingPercent(monthsCardModel)
+                            .getRemainingPercent(budgetModel)
                             .contains('100')
                         ? 1.8
                         : 1.7,
@@ -76,19 +76,19 @@ class RemainingExpensePieChartCard extends StatelessWidget {
                       fontSize: 10.0,
                     ),
                   ),
-                if (homeController.getTotalExpenses(monthsCardModel) > 0.0)
+                if (homeController.getTotalExpenses(budgetModel) > 0.0)
                   PieChartSectionData(
                     value: double.parse(
-                        homeController.getExpensePercent(monthsCardModel)),
+                        homeController.getExpensePercent(budgetModel)),
                     showTitle: false,
                     //title: expensePercent + '%',
                     color: kSecondaryColor,
                     badgeWidget: Text(
-                      homeController.getExpensePercent(monthsCardModel) + '%',
+                      homeController.getExpensePercent(budgetModel) + '%',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     badgePositionPercentageOffset: homeController
-                            .getExpensePercent(monthsCardModel)
+                            .getExpensePercent(budgetModel)
                             .contains('100')
                         ? 1.8
                         : 1.7,

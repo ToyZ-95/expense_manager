@@ -12,13 +12,13 @@ import 'package:intl/intl.dart';
 class AddExpense extends StatelessWidget {
   HomeController homeController = Get.find();
 
-  String guid;
+  int monthId;
   String month;
   String year;
 
   final DateFormat formatter = DateFormat('EEEE, d MMMM');
 
-  AddExpense({required this.guid, required this.month, required this.year});
+  AddExpense({required this.monthId, required this.month, required this.year});
 
   void addExpense() {
     AddExpenseController addExpenseController = Get.find();
@@ -36,8 +36,8 @@ class AddExpense extends StatelessWidget {
     Get.back();
 
     homeController.addExpense(
-      guid,
       ExpenseModel(
+          monthId: monthId,
           expenseName: addExpenseController.category
               .toString()
               .split('.')[1]

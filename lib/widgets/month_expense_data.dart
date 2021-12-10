@@ -11,23 +11,23 @@ import 'package:get/get.dart';
 import 'month_expense_list.dart';
 
 class HomeExpenseData extends StatelessWidget {
-  MonthsCardModel monthsCardModel;
+  BudgetModel budgetModel;
 
   HomeController homeController = Get.find();
 
-  HomeExpenseData({required this.monthsCardModel});
+  HomeExpenseData({required this.budgetModel});
 
   List<Widget> getWidgets(BuildContext context) {
     List<Widget> list = [];
 
     list.add(
       RemainingExpensePieChartCard(
-        monthsCardModel: monthsCardModel,
+        budgetModel: budgetModel,
         editable: true,
       ),
     );
 
-    if (monthsCardModel.expenses == null || monthsCardModel.expenses!.isEmpty) {
+    if (budgetModel.expenses == null || budgetModel.expenses!.isEmpty) {
       list.add(
         const SizedBox(
           height: 60.0,
@@ -35,14 +35,14 @@ class HomeExpenseData extends StatelessWidget {
       );
       list.add(
         FloatingActionButton(
-          heroTag: monthsCardModel.monthName.toString() +
-              monthsCardModel.year.toString(),
+          heroTag:
+              budgetModel.monthName.toString() + budgetModel.year.toString(),
           onPressed: () {
             Get.to(
               () => AddExpense(
-                guid: monthsCardModel.guid!,
-                month: monthsCardModel.monthName!,
-                year: monthsCardModel.year!,
+                monthId: budgetModel.id!,
+                month: budgetModel.monthName!,
+                year: budgetModel.year!,
               ),
             );
           },
@@ -92,9 +92,9 @@ class HomeExpenseData extends StatelessWidget {
                     onTap: () {
                       Get.to(
                         () => AddExpense(
-                          guid: monthsCardModel.guid!,
-                          month: monthsCardModel.monthName!,
-                          year: monthsCardModel.year!,
+                          monthId: budgetModel.id!,
+                          month: budgetModel.monthName!,
+                          year: budgetModel.year!,
                         ),
                       );
                     },
@@ -114,7 +114,7 @@ class HomeExpenseData extends StatelessWidget {
                     onTap: () {
                       Get.to(
                         () => Stats(
-                          monthsCardModel: monthsCardModel,
+                          budgetModel: budgetModel,
                           selectedTab: 2,
                         ),
                       );
@@ -134,7 +134,7 @@ class HomeExpenseData extends StatelessWidget {
             const SizedBox(
               height: 20.0,
             ),
-            MonthExpenseList(monthsCardModel: monthsCardModel, onlyLast: true),
+            MonthExpenseList(budgetModel: budgetModel, onlyLast: true),
           ],
         ),
       );

@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ExpensePerDayLineChartCard extends StatelessWidget {
-  MonthsCardModel monthsCardModel;
+  BudgetModel monthsCardModel;
 
   ExpensePerDayLineChartCard({required this.monthsCardModel});
 

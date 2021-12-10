@@ -15,17 +15,17 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  void addMonthsCard(BudgetModel budgetModel) => () async {
-        await DBProvider.db.insertBudget(budgetModel);
-        budgetsModels.add(budgetModel);
-      };
+  void addMonthsCard(BudgetModel budgetModel) async {
+    budgetModel.id = await DBProvider.db.insertBudget(budgetModel);
+    budgetsModels.add(budgetModel);
+  }
 
   void removeMonthsCard(BudgetModel monthsCardModel) =>
       budgetsModels.remove(monthsCardModel);
 
-  void addExpense(int id, ExpenseModel expenseModel) {
-    BudgetModel monthCardModel =
-        budgetsModels.firstWhere((element) => element.id == id);
+  void addExpense(ExpenseModel expenseModel) {
+    BudgetModel monthCardModel = budgetsModels
+        .firstWhere((element) => element.id == expenseModel.monthId);
     if (monthCardModel.expenses != null) {
       monthCardModel.expenses!.add(expenseModel);
     } else {

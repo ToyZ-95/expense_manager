@@ -39,17 +39,19 @@ class DBProvider {
           "Amount REAL,"
           "Note TEXT,"
           "TimeStamp TEXT,"
-          "Category TEXT,"
+          "Category TEXT"
           ")");
     });
   }
 
-  Future<void> insertBudget(BudgetModel budget) async {
+  Future<int> insertBudget(BudgetModel budget) async {
     final db = await database;
 
-    int rows =
-        await db.rawInsert('INSERT INTO Budgets (Month_Name,Year,Budget) '
-            'VALUES (${budget.monthName},${budget.year},${budget.budget})');
+    int insertedRowID =
+        await db.rawInsert("INSERT INTO Budgets (Month_Name,Year,Budget) "
+            "VALUES ('${budget.monthName}',${budget.year},${budget.budget})");
+
+    return insertedRowID;
   }
 
   Future<void> insertExpense(ExpenseModel expense) async {
@@ -58,5 +60,20 @@ class DBProvider {
     db.rawInsert(
         'INSERT INTO Expenses (Month_ID,Expense_Name,Amount,Note,TimeStamp,Category) '
         'VALUES (${expense.monthId},${expense.expenseName},${expense.amount},${expense.note},${expense.timeStamp},${expense.category})');
+  }
+
+  Future<int> getLastInsertedID() async {
+    final db = await database;
+
+    var id = await db.rawQuery('SELECT last_insert_rowid();');
+
+    return 0;
+
+    // final String MY_QUERY = "SELECT last_insert_rowid()";
+    //     Cursor cur = mDb.rawQuery(MY_QUERY, null);
+    //     cur.moveToFirst();
+    //     int ID = cur.getInt(0);
+    //     cur.close();
+    //     return ID;
   }
 }

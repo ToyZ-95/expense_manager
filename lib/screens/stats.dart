@@ -16,13 +16,13 @@ class Stats extends StatelessWidget {
     kSecondaryColor,
   ];
 
-  MonthsCardModel monthsCardModel;
+  BudgetModel budgetModel;
   StatsController? statsController;
   int? selectedTab;
 
   HomeController homeController = Get.find();
 
-  Stats({required this.monthsCardModel, this.selectedTab}) {
+  Stats({required this.budgetModel, this.selectedTab}) {
     statsController = Get.put(StatsController());
     statsController!.selectTab(selectedTab!);
   }
@@ -151,11 +151,11 @@ class Stats extends StatelessWidget {
                 return Column(
                   children: [
                     RemainingExpensePieChartCard(
-                      monthsCardModel: monthsCardModel,
+                      budgetModel: budgetModel,
                       editable: false,
                     ),
                     ExpensePerDayLineChartCard(
-                      monthsCardModel: monthsCardModel,
+                      monthsCardModel: budgetModel,
                     ),
                   ],
                 );
@@ -190,7 +190,7 @@ class Stats extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    monthsCardModel.monthName!,
+                    budgetModel.monthName!,
                     style: const TextStyle(
                       color: kPrimaryColor,
                       fontWeight: FontWeight.bold,
@@ -202,7 +202,7 @@ class Stats extends StatelessWidget {
                     height: 2.0,
                   ),
                   Text(
-                    monthsCardModel.year!,
+                    budgetModel.year!,
                     style: const TextStyle(
                       color: kSecondaryColor,
                       fontWeight: FontWeight.bold,
@@ -248,7 +248,7 @@ class Stats extends StatelessWidget {
               itemCount: 1,
               itemBuilder: (context, index) {
                 return MonthExpenseList(
-                  monthsCardModel: monthsCardModel,
+                  budgetModel: budgetModel,
                   onlyLast: false,
                 );
               }),
