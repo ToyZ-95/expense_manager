@@ -7,11 +7,23 @@ class HomeController extends GetxController {
   //Using rx list to get access refresh() when any changes occurs in list
   //e.g. adding expense to list
   RxList<BudgetModel> budgetsModels = <BudgetModel>[].obs;
+  RxMap<int, List<ExpenseModel>> expensesMap = <int, List<ExpenseModel>>{}.obs;
 
   @override
   void onInit() {
     // called immediately after the widget is allocated memory
     super.onInit();
+  }
+
+  Future<List<BudgetModel>> getAllBudgets() async {
+    List<BudgetModel> budgets = await DBProvider.db.getAllBudgets();
+
+    for (var element in budgets) {
+      expensesMap[element.id!] =
+          await DBProvider.db.getExpensesFromMonthId(element.id!);
+    }
+
+    return budgets;
   }
 
   void addMonthsCard(BudgetModel budgetModel) async {
@@ -23,6 +35,11 @@ class HomeController extends GetxController {
       budgetsModels.remove(monthsCardModel);
 
   void addExpense(ExpenseModel expenseModel) {
+    int monthId =
+        expensesMap.keys.firstWhere((id) => id == expenseModel.monthId);
+
+    expensesMap[monthId]!.add(expenseModel);
+
     DBProvider.db.insertExpense(expenseModel);
 
     // BudgetModel budgetModel = budgetsModels

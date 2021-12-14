@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
   }
 
   void fetchAllBudgets() async {
-    homeController.budgetsModels.value = await DBProvider.db.getAllBudgets();
+    homeController.budgetsModels.value = await homeController.getAllBudgets();
   }
 
   @override
