@@ -65,12 +65,6 @@ class DBProvider {
 
   Future<List<BudgetModel>> getAllBudgets() async {
     final db = await database;
-
-    String query = "DELETE FROM Budgets";
-    await db.rawQuery(query);
-    query = "DELETE FROM Expenses;";
-    await db.rawQuery(query);
-
     final List<Map<String, dynamic>> maps = await db.query('Budgets');
 
     return List.generate(maps.length, (i) {

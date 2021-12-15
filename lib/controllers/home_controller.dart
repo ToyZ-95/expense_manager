@@ -32,20 +32,21 @@ class HomeController extends GetxController {
   void addBudgetModel(BudgetModel budgetModel) async {
     budgetModel.id = await DBProvider.db.insertBudget(budgetModel);
     budgetsModels.add(budgetModel);
-    ex
+    budgetsModels.refresh();
+    expensesMap[budgetModel.id!] = <ExpenseModel>[];
   }
 
   void removeMonthsCard(BudgetModel monthsCardModel) =>
       budgetsModels.remove(monthsCardModel);
 
   void addExpense(ExpenseModel expenseModel) {
-    int monthId =
-        expensesMap.keys.firstWhere((id) => id == expenseModel.monthId);
+    // int monthId =
+    //     expensesMap.keys.firstWhere((id) => id == expenseModel.monthId);
 
-    expensesMap[monthId]!.add(expenseModel);
+    expensesMap[expenseModel.monthId]!.add(expenseModel);
 
     DBProvider.db.insertExpense(expenseModel);
-
+    budgetsModels.refresh();
     expensesMap.refresh();
 
     // BudgetModel budgetModel = budgetsModels
