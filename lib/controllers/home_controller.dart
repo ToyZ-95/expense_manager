@@ -26,9 +26,13 @@ class HomeController extends GetxController {
     return budgets;
   }
 
-  void addMonthsCard(BudgetModel budgetModel) async {
+  List<ExpenseModel>? getExpensesUsingMonthID(int monthId) =>
+      expensesMap.containsKey(monthId) ? expensesMap[monthId]! : null;
+
+  void addBudgetModel(BudgetModel budgetModel) async {
     budgetModel.id = await DBProvider.db.insertBudget(budgetModel);
     budgetsModels.add(budgetModel);
+    ex
   }
 
   void removeMonthsCard(BudgetModel monthsCardModel) =>
@@ -41,6 +45,8 @@ class HomeController extends GetxController {
     expensesMap[monthId]!.add(expenseModel);
 
     DBProvider.db.insertExpense(expenseModel);
+
+    expensesMap.refresh();
 
     // BudgetModel budgetModel = budgetsModels
     //     .firstWhere((element) => element.id == expenseModel.monthId);
@@ -57,9 +63,15 @@ class HomeController extends GetxController {
   BudgetModel getMonthModel(int id) =>
       budgetsModels.firstWhere((element) => element.id == id);
 
-  Future<double> getTotalExpenses(int monthId) async {
-    double totalExpensesOfMonth =
-        await DBProvider.db.getTotalExpensesOfMonth(monthId);
+  double getTotalExpenses(int monthId) {
+    double totalExpensesOfMonth = 0;
+
+    List<ExpenseModel>? monthExpenses = getExpensesUsingMonthID(monthId);
+    if (monthExpenses != null) {
+      for (ExpenseModel item in monthExpenses) {
+        totalExpensesOfMonth += item.amount!;
+      }
+    }
     return totalExpensesOfMonth;
     // double expensesNum = 0;
     // if (monthsCardModel.expenses != null) {
@@ -73,91 +85,92 @@ class HomeController extends GetxController {
 
   double getBudget(BudgetModel budgetModel) => budgetModel.budget!;
 
-  Future<double> getRemainingBudget(BudgetModel budgetModel) async {
+  double getRemainingBudget(BudgetModel budgetModel) {
     double budgetOfMonth = getBudget(budgetModel);
-    double totalExpensesOfMonth = await getTotalExpenses(budgetModel.id!);
+    double totalExpensesOfMonth = getTotalExpenses(budgetModel.id!);
 
     return budgetOfMonth - totalExpensesOfMonth;
   }
 
-  Future<String> getExpensePercent(BudgetModel budgetModel) async {
-    double totalExpensesOfMonth = await getTotalExpenses(budgetModel.id!) * 100;
+  String getExpensePercent(BudgetModel budgetModel) {
+    double totalExpensesOfMonth = getTotalExpenses(budgetModel.id!) * 100;
     return (totalExpensesOfMonth / getBudget(budgetModel)).toStringAsFixed(2);
   }
 
-  Future<String> getRemainingPercent(BudgetModel monthsCardModel) async {
-    double remainingBudget = await getRemainingBudget(monthsCardModel) * 100;
+  String getRemainingPercent(BudgetModel monthsCardModel) {
+    double remainingBudget = getRemainingBudget(monthsCardModel) * 100;
     return (remainingBudget / getBudget(monthsCardModel)).toStringAsFixed(2);
   }
 
-  Future<double> getHighestExpenseInMonth(BudgetModel budgetModel) async {
+  double getHighestExpenseInMonth(BudgetModel budgetModel) {
     //Take expense list from model
     // List<ExpenseModel> expenses = monthsCardModel.expenses!;
-
-    List<ExpenseModel> expenses =
-        await DBProvider.db.getExpensesFromMonthId(budgetModel.id!);
-
-    //sort expense list as per day
-    expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
-        .day
-        .compareTo(DateTime.parse(b.timeStamp!).day));
-
     double highestExpense = 0;
     double totalExpenseInADay = 0;
 
-    int day = 1;
-    for (var i = 0; i < expenses.length; i++) {
-      DateTime timeStamp = DateTime.parse(expenses[i].timeStamp!);
+    List<ExpenseModel>? expenses = getExpensesUsingMonthID(budgetModel.id!);
 
-      if (day != timeStamp.day) {
-        day = timeStamp.day;
+    if (expenses != null) {
+      //sort expense list as per day
+      expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
+          .day
+          .compareTo(DateTime.parse(b.timeStamp!).day));
 
-        if (highestExpense < totalExpenseInADay) {
-          highestExpense = totalExpenseInADay;
+      int day = 1;
+      for (var i = 0; i < expenses.length; i++) {
+        DateTime timeStamp = DateTime.parse(expenses[i].timeStamp!);
+
+        if (day != timeStamp.day) {
+          day = timeStamp.day;
+
+          if (highestExpense < totalExpenseInADay) {
+            highestExpense = totalExpenseInADay;
+          }
+
+          totalExpenseInADay = expenses[i].amount!;
+        } else {
+          totalExpenseInADay += expenses[i].amount!;
         }
-
-        totalExpenseInADay = expenses[i].amount!;
-      } else {
-        totalExpenseInADay += expenses[i].amount!;
       }
-    }
-    if (highestExpense < totalExpenseInADay) {
-      highestExpense = totalExpenseInADay;
+      if (highestExpense < totalExpenseInADay) {
+        highestExpense = totalExpenseInADay;
+      }
     }
     return highestExpense;
   }
 
-  Future<double> getPerDayExpenses(BudgetModel budgetModel, int day) async {
+  double getPerDayExpenses(BudgetModel budgetModel, int day) {
     double amount = 0;
 
-    List<ExpenseModel> expenses =
-        await DBProvider.db.getExpensesFromMonthId(budgetModel.id!);
+    List<ExpenseModel>? expenses = getExpensesUsingMonthID(budgetModel.id!);
 
-    expenses = expenses
-        .where((element) => DateTime.parse(element.timeStamp!).day == day)
-        .toList();
+    if (expenses != null) {
+      expenses = expenses
+          .where((element) => DateTime.parse(element.timeStamp!).day == day)
+          .toList();
 
-    for (var i = 0; i < expenses.length; i++) {
-      amount += expenses[i].amount!;
+      for (var i = 0; i < expenses.length; i++) {
+        amount += expenses[i].amount!;
+      }
     }
 
     return amount;
   }
 
-  Future<int> getLatestExpenseDay(BudgetModel budgetModel) async {
+  int getLatestExpenseDay(BudgetModel budgetModel) {
     int day = 0;
 
     //Take expense list from model
-    List<ExpenseModel> expenses =
-        await DBProvider.db.getExpensesFromMonthId(budgetModel.id!);
+    List<ExpenseModel>? expenses = getExpensesUsingMonthID(budgetModel.id!);
 
-    //sort expense list as per day
-    expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
-        .day
-        .compareTo(DateTime.parse(b.timeStamp!).day));
+    if (expenses != null) {
+      //sort expense list as per day
+      expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
+          .day
+          .compareTo(DateTime.parse(b.timeStamp!).day));
 
-    day = DateTime.parse(expenses.last.timeStamp!).day;
-
+      day = DateTime.parse(expenses.last.timeStamp!).day;
+    }
     return day;
   }
 

@@ -27,7 +27,8 @@ class HomeExpenseData extends StatelessWidget {
       ),
     );
 
-    if (budgetModel.expenses == null || budgetModel.expenses!.isEmpty) {
+    if (homeController.getExpensesUsingMonthID(budgetModel.id!) == null ||
+        homeController.getExpensesUsingMonthID(budgetModel.id!)!.isEmpty) {
       list.add(
         const SizedBox(
           height: 60.0,

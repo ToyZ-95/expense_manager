@@ -1,21 +1,26 @@
+import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/models/expense_model.dart';
 import 'package:expense_manager/models/budget_model.dart';
 import 'package:expense_manager/widgets/expense_date_card.dart';
 import 'package:expense_manager/widgets/expense_details_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MonthExpenseList extends StatelessWidget {
-  BudgetModel? budgetModel;
+  BudgetModel budgetModel;
   bool? onlyLast = false;
 
-  MonthExpenseList({this.budgetModel, this.onlyLast});
+  HomeController homeController = Get.find();
+
+  MonthExpenseList({required this.budgetModel, this.onlyLast});
 
   List<Widget> getWidgets(BudgetModel monthsCardModel, bool onlyLast) {
 //Take expense list from model
-    List<ExpenseModel> expenses = monthsCardModel.expenses!;
+    List<ExpenseModel>? expenses =
+        homeController.getExpensesUsingMonthID(budgetModel.id!);
 
     //sort expense list as per day
-    expenses.sort((a, b) => DateTime.parse(a.timeStamp!)
+    expenses!.sort((a, b) => DateTime.parse(a.timeStamp!)
         .day
         .compareTo(DateTime.parse(b.timeStamp!).day));
 

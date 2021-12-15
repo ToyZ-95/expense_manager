@@ -1,5 +1,3 @@
-import 'package:expense_manager/models/expense_model.dart';
-
 class BudgetModel {
   int? id;
   String? monthName;

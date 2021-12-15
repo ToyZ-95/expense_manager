@@ -15,7 +15,7 @@ class AddBudget extends StatelessWidget {
   void addBudget() {
     AddBudgetController addBudgetController = Get.find();
 
-    homeController.addMonthsCard(
+    homeController.addBudgetModel(
       BudgetModel(
         monthName: formatter
             .format(addBudgetController.selectedMonthYear)

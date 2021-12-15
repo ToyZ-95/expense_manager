@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:expense_manager/enums/global_enums.dart';
 import 'package:expense_manager/models/budget_model.dart';
 import 'package:expense_manager/models/expense_model.dart';
 import 'package:path/path.dart';
@@ -39,7 +40,7 @@ class DBProvider {
           "Amount REAL,"
           "Note TEXT,"
           "TimeStamp TEXT,"
-          "Category TEXT"
+          "Category INTEGER"
           ")");
     });
   }
@@ -56,14 +57,19 @@ class DBProvider {
 
   Future<void> insertExpense(ExpenseModel expense) async {
     final db = await database;
-
-    db.rawInsert(
-        'INSERT INTO Expenses (Month_ID,Expense_Name,Amount,Note,TimeStamp,Category) '
-        'VALUES (${expense.monthId},${expense.expenseName},${expense.amount},${expense.note},${expense.timeStamp},${expense.category})');
+    String query =
+        "INSERT INTO Expenses (Month_ID,Expense_Name,Amount,Note,TimeStamp,Category) "
+        "VALUES (${expense.monthId},'${expense.expenseName}',${expense.amount},'${expense.note}','${expense.timeStamp}',${expense.category!.index})";
+    db.rawInsert(query);
   }
 
   Future<List<BudgetModel>> getAllBudgets() async {
     final db = await database;
+
+    String query = "DELETE FROM Budgets";
+    await db.rawQuery(query);
+    query = "DELETE FROM Expenses;";
+    await db.rawQuery(query);
 
     final List<Map<String, dynamic>> maps = await db.query('Budgets');
 
@@ -89,7 +95,7 @@ class DBProvider {
           amount: maps[i]['Amount'],
           note: maps[i]['Note'],
           timeStamp: maps[i]['TimeStamp'],
-          category: maps[i]['Category']);
+          category: ExpenseCategory.values[maps[i]['Category']]);
     });
   }
 
