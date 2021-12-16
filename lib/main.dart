@@ -61,21 +61,5 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return const HomeScreen();
-
-    // if (_error) {
-    //   return const Scaffold(
-    //     body: Center(
-    //       child: Text("Firebase Error"),
-    //     ),
-    //   );
-    // }
-
-    // if (FirebaseAuth.instance.currentUser != null) {
-    //   return const HomeScreen();
-    // }
-
-    // return const Scaffold(
-    //   body: Login(),
-    // );
   }
 }

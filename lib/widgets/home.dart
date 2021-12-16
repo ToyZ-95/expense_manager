@@ -11,18 +11,8 @@ class Home extends StatelessWidget {
 
   final PageController pageController = PageController(initialPage: 0);
 
-  // Home() {
-  //   fetchAllBudgets();
-  // }
-
-  // void fetchAllBudgets() async {
-  //   homeController.budgetsModels.value = await homeController.getAllBudgets();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    //homeController.getDummyData();
-
     return Scaffold(
       body: Column(
         children: [

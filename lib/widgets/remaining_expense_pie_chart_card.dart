@@ -202,7 +202,7 @@ class RemainingExpensePieChartCard extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       width: MediaQuery.of(context).size.width - 10,
-      height: MediaQuery.of(context).size.height / 1.8,
+      height: MediaQuery.of(context).size.height / 2.0,
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
