@@ -1,24 +1,23 @@
 import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/controllers/home_controller.dart';
 import 'package:expense_manager/screens/add_budget_screen.dart';
-import 'package:expense_manager/services/database.dart';
 import 'package:expense_manager/widgets/month_expense_data.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
-  HomeController homeController = Get.put(HomeController());
+  //HomeController homeController = Get.put(HomeController());
+  HomeController homeController = Get.find();
 
   final PageController pageController = PageController(initialPage: 0);
 
-  Home() {
-    fetchAllBudgets();
-  }
+  // Home() {
+  //   fetchAllBudgets();
+  // }
 
-  void fetchAllBudgets() async {
-    homeController.budgetsModels.value = await homeController.getAllBudgets();
-  }
+  // void fetchAllBudgets() async {
+  //   homeController.budgetsModels.value = await homeController.getAllBudgets();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +35,9 @@ class Home extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Text(
-                  'Hi, ' + FirebaseAuth.instance.currentUser!.displayName!,
-                  style: const TextStyle(
+                const Text(
+                  'Hi, User',
+                  style: TextStyle(
                     color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,

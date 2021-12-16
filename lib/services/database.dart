@@ -19,6 +19,7 @@ class DBProvider {
 
     // if _database is null we instantiate it
     _database = await initDB();
+
     return _database!;
   }
 
@@ -89,7 +90,7 @@ class DBProvider {
           amount: maps[i]['Amount'],
           note: maps[i]['Note'],
           timeStamp: maps[i]['TimeStamp'],
-          category: ExpenseCategory.values[maps[i]['Category']]);
+          category: ExpenseCategory.values[int.parse(maps[i]['Category'])]);
     });
   }
 

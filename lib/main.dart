@@ -1,12 +1,9 @@
-import 'package:expense_manager/constants/constants.dart';
 import 'package:expense_manager/screens/home_screen.dart';
-import 'package:expense_manager/screens/login_screen.dart';
-import 'package:expense_manager/widgets/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'controllers/home_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,28 +35,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _initialized = false;
-  bool _error = false;
+  HomeController homeController = Get.put(HomeController());
 
-  void initializeFlutterFire() async {
-    try {
-      // Wait for Firebase to initialize and set `_initialized` state to true
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      // Set `_error` state to true if Firebase initialization fails
-      setState(() {
-        _error = true;
-      });
-    }
-  }
+  bool _initialized = false;
 
   @override
   initState() {
-    initializeFlutterFire();
     super.initState();
+    homeController.getAllBudgets().then((value) {
+      homeController.budgetsModels.value = value;
+      setState(() {
+        _initialized = true;
+      });
+    });
   }
 
   @override
@@ -72,20 +60,22 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }
 
-    if (_error) {
-      return const Scaffold(
-        body: Center(
-          child: Text("Firebase Error"),
-        ),
-      );
-    }
+    return const HomeScreen();
 
-    if (FirebaseAuth.instance.currentUser != null) {
-      return const HomeScreen();
-    }
+    // if (_error) {
+    //   return const Scaffold(
+    //     body: Center(
+    //       child: Text("Firebase Error"),
+    //     ),
+    //   );
+    // }
 
-    return const Scaffold(
-      body: Login(),
-    );
+    // if (FirebaseAuth.instance.currentUser != null) {
+    //   return const HomeScreen();
+    // }
+
+    // return const Scaffold(
+    //   body: Login(),
+    // );
   }
 }
