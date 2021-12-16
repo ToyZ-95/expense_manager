@@ -1,11 +1,6 @@
 <h1>Expense Manager</h1>
-<h2>Expense tracker app created in flutter with firebase</h2>
+<h2>Expense tracker app created in flutter with sqlite support.</h2>
 
-<h3>Login | Sign Up</h3>
-<Span>
-<img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/Login.jpg?raw=true" width="200" height="400"/>
-<img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/SignUP.jpg?raw=true" width="200" height="400"/>
-</Span>
 <h3>Homescreen</h3>
 <Span>
 <img src="https://github.com/ToyZ-95/expense_manager/blob/main/Screenshots/HomeScreen_1.jpg?raw=true" width="200" height="400"/>
@@ -31,14 +26,13 @@
 </Span>
 
 ### TODO For This App
-- [x] Login | Signup using firebase
 - [x] Add Budget
 - [x] Add Expense
 - [x] View Homescreen
 - [x] View expense log of particular month
 - [x] View remaining budget and expense per/day charts of particular month
+- [x] Save data to sqlite and retrive data from sqlite
 - [ ] Compare Two Different Months
 - [ ] Add more charts
 - [ ] Add filters
-- [ ] Update data to firestore
 - [ ] And much more coming soon!!!
