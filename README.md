@@ -1,5 +1,5 @@
 <h1>Expense Manager</h1>
-<h2>Expense tracker app created in flutter with sqlite support.</h2>
+<h2>Expense tracker app created in flutter with sqlite support using GetX for statemanagment.</h2>
 
 <h3>Homescreen</h3>
 <Span>
