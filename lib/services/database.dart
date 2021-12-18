@@ -90,7 +90,8 @@ class DBProvider {
           amount: maps[i]['Amount'],
           note: maps[i]['Note'],
           timeStamp: maps[i]['TimeStamp'],
-          category: ExpenseCategory.values[int.parse(maps[i]['Category'])]);
+          category: ExpenseCategory
+              .values[int.parse(maps[i]['Category'].toString())]);
     });
   }
 

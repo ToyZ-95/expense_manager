@@ -40,25 +40,11 @@ class HomeController extends GetxController {
       budgetsModels.remove(monthsCardModel);
 
   void addExpense(ExpenseModel expenseModel) {
-    // int monthId =
-    //     expensesMap.keys.firstWhere((id) => id == expenseModel.monthId);
-
     expensesMap[expenseModel.monthId]!.add(expenseModel);
 
     DBProvider.db.insertExpense(expenseModel);
     budgetsModels.refresh();
     expensesMap.refresh();
-
-    // BudgetModel budgetModel = budgetsModels
-    //     .firstWhere((element) => element.id == expenseModel.monthId);
-
-    // if (budgetModel.expenses != null) {
-    //   budgetModel.expenses!.add(expenseModel);
-    // } else {
-    //   budgetModel.expenses = [expenseModel];
-    // }
-
-    //budgetsModels.refresh();
   }
 
   BudgetModel getMonthModel(int id) =>
@@ -74,14 +60,6 @@ class HomeController extends GetxController {
       }
     }
     return totalExpensesOfMonth;
-    // double expensesNum = 0;
-    // if (monthsCardModel.expenses != null) {
-    //   for (ExpenseModel item in monthsCardModel.expenses!) {
-    //     expensesNum += item.amount!;
-    //   }
-    // }
-
-    // return expensesNum;
   }
 
   double getBudget(BudgetModel budgetModel) => budgetModel.budget!;
@@ -105,7 +83,6 @@ class HomeController extends GetxController {
 
   double getHighestExpenseInMonth(BudgetModel budgetModel) {
     //Take expense list from model
-    // List<ExpenseModel> expenses = monthsCardModel.expenses!;
     double highestExpense = 0;
     double totalExpenseInADay = 0;
 
