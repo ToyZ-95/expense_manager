@@ -20,48 +20,55 @@ class DBProvider {
     // if _database is null we instantiate it
     _database = await initDB();
 
+    await createTables();
+
     return _database!;
   }
 
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "ExpenseManager.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {},
-        onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE Budgets ("
-          "ID INTEGER PRIMARY KEY,"
-          "Month_Name TEXT,"
-          "Year INTEGER,"
-          "Budget REAL"
-          ")");
+    return await openDatabase(
+      path,
+      version: 1,
+      onOpen: (db) {},
+      onCreate: (Database db, int version) {},
+    );
+  }
 
-      await db.execute("CREATE TABLE Expenses ("
-          "Month_ID INTEGER,"
-          "Expense_Name TEXT,"
-          "Amount REAL,"
-          "Note TEXT,"
-          "TimeStamp TEXT,"
-          "Category INTEGER"
-          ")");
-    });
+  Future<void> createTables() async {
+    final db = await database;
+    await db.execute("CREATE TABLE IF NOT EXISTS Budgets ("
+        "MonthId INTEGER PRIMARY KEY,"
+        "MonthName TEXT,"
+        "Year INTEGER,"
+        "Budget REAL"
+        ")");
+
+    await db.execute("CREATE TABLE IF NOT EXISTS Expenses ("
+        "ExpenseId INTEGER PRIMARY KEY,"
+        "MonthId INTEGER,"
+        "ExpenseName TEXT,"
+        "Amount REAL,"
+        "Note TEXT,"
+        "TimeStamp TEXT,"
+        "Category INTEGER"
+        ")");
   }
 
   Future<int> insertBudget(BudgetModel budget) async {
     final db = await database;
 
-    int insertedRowID =
-        await db.rawInsert("INSERT INTO Budgets (Month_Name,Year,Budget) "
-            "VALUES ('${budget.monthName}',${budget.year},${budget.budget})");
-
-    return insertedRowID;
+    return await db.rawInsert("INSERT INTO Budgets (MonthName,Year,Budget) "
+        "VALUES ('${budget.monthName}',${budget.year},${budget.budget})");
   }
 
-  Future<void> insertExpense(ExpenseModel expense) async {
+  Future<int> insertExpense(ExpenseModel expense) async {
     final db = await database;
     String query =
-        "INSERT INTO Expenses (Month_ID,Expense_Name,Amount,Note,TimeStamp,Category) "
+        "INSERT INTO Expenses (MonthId,ExpenseName,Amount,Note,TimeStamp,Category) "
         "VALUES (${expense.monthId},'${expense.expenseName}',${expense.amount},'${expense.note}','${expense.timeStamp}',${expense.category!.index})";
-    db.rawInsert(query);
+    return await db.rawInsert(query);
   }
 
   Future<List<BudgetModel>> getAllBudgets() async {
@@ -70,8 +77,8 @@ class DBProvider {
 
     return List.generate(maps.length, (i) {
       return BudgetModel(
-          id: maps[i]['ID'],
-          monthName: maps[i]['Month_Name'],
+          id: maps[i]['MonthId'],
+          monthName: maps[i]['MonthName'],
           year: maps[i]['Year'].toString(),
           budget: maps[i]['Budget']);
     });
@@ -81,12 +88,13 @@ class DBProvider {
     final db = await database;
 
     final List<Map<String, dynamic>> maps =
-        await db.query('Expenses', where: 'Month_ID = ?', whereArgs: [id]);
+        await db.query('Expenses', where: 'MonthId = ?', whereArgs: [id]);
 
     return List.generate(maps.length, (i) {
       return ExpenseModel(
-          monthId: maps[i]['Month_ID'],
-          expenseName: maps[i]['Expense_Name'],
+          monthId: maps[i]['MonthId'],
+          expenseId: maps[i]['ExpenseId'],
+          expenseName: maps[i]['ExpenseName'],
           amount: maps[i]['Amount'],
           note: maps[i]['Note'],
           timeStamp: maps[i]['TimeStamp'],
@@ -99,9 +107,18 @@ class DBProvider {
     final db = await database;
 
     final List<Map<String, dynamic>> maps = await db.rawQuery(
-        'SELECT SUM(Amount) as TotalExpense FROM Expenses WHERE Month_ID = $monthId');
+        'SELECT SUM(Amount) as TotalExpense FROM Expenses WHERE MonthId = $monthId');
 
     return double.parse(maps[0]['TotalExpense']);
+  }
+
+  Future<void> deleteExpense(ExpenseModel expenseModel) async {
+    final db = await database;
+    db.rawQuery(
+        "DELETE FROM Expenses WHERE MonthId = ${expenseModel.monthId} AND ExpenseId = ${expenseModel.expenseId}");
+    // db.delete("Expenses",
+    //     where: "MonthId = ? AND ExpenseId = ?",
+    //     whereArgs: [expenseModel.monthId, expenseModel.expenseId]);
   }
 
   Future<int> getLastInsertedID() async {

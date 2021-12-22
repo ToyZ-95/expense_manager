@@ -17,7 +17,6 @@ class HomeController extends GetxController {
 
   Future<List<BudgetModel>> getAllBudgets() async {
     List<BudgetModel> budgets = await DBProvider.db.getAllBudgets();
-
     for (var element in budgets) {
       expensesMap[element.id!] =
           await DBProvider.db.getExpensesFromMonthId(element.id!);
@@ -39,16 +38,23 @@ class HomeController extends GetxController {
   void removeMonthsCard(BudgetModel monthsCardModel) =>
       budgetsModels.remove(monthsCardModel);
 
-  void addExpense(ExpenseModel expenseModel) {
-    expensesMap[expenseModel.monthId]!.add(expenseModel);
+  void deleteExpense(ExpenseModel expenseModel) {
+    expensesMap[expenseModel.monthId]!.remove(expenseModel);
+    DBProvider.db.deleteExpense(expenseModel);
+    budgetsModels.refresh();
+    expensesMap.refresh();
+    update(['expenseListId']);
+  }
 
-    DBProvider.db.insertExpense(expenseModel);
+  void addExpense(ExpenseModel expenseModel) async {
+    expenseModel.expenseId = await DBProvider.db.insertExpense(expenseModel);
+    expensesMap[expenseModel.monthId]!.add(expenseModel);
     budgetsModels.refresh();
     expensesMap.refresh();
   }
 
-  BudgetModel getMonthModel(int id) =>
-      budgetsModels.firstWhere((element) => element.id == id);
+  BudgetModel getMonthModel(int monthId) =>
+      budgetsModels.firstWhere((element) => element.id == monthId);
 
   double getTotalExpenses(int monthId) {
     double totalExpensesOfMonth = 0;

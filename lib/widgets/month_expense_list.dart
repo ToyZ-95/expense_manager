@@ -76,8 +76,11 @@ class MonthExpenseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: getWidgets(budgetModel, onlyLast!),
+    return GetBuilder<HomeController>(
+      id: 'expenseListId',
+      builder: (value) => Column(
+        children: getWidgets(budgetModel, onlyLast!),
+      ),
     );
   }
 }
