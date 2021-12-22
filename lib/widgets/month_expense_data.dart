@@ -4,7 +4,6 @@ import 'package:expense_manager/models/budget_model.dart';
 import 'package:expense_manager/screens/add_expense_screen.dart';
 import 'package:expense_manager/screens/stats.dart';
 import 'package:expense_manager/widgets/remaining_expense_pie_chart_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
