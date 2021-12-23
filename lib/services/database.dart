@@ -112,10 +112,20 @@ class DBProvider {
     return double.parse(maps[0]['TotalExpense']);
   }
 
-  Future<void> deleteExpense(ExpenseModel expenseModel) async {
+  Future<void> deleteExpense(ExpenseModel expenseModel, {wholeDay}) async {
     final db = await database;
-    db.rawQuery(
-        "DELETE FROM Expenses WHERE MonthId = ${expenseModel.monthId} AND ExpenseId = ${expenseModel.expenseId}");
+
+    String query = '';
+
+    if (!wholeDay) {
+      query =
+          "DELETE FROM Expenses WHERE MonthId = ${expenseModel.monthId} AND ExpenseId = ${expenseModel.expenseId}";
+    } else {
+      query =
+          "DELETE FROM Expenses WHERE MonthId = ${expenseModel.monthId} AND TimeStamp = '${expenseModel.timeStamp}'";
+    }
+
+    db.rawQuery(query);
     // db.delete("Expenses",
     //     where: "MonthId = ? AND ExpenseId = ?",
     //     whereArgs: [expenseModel.monthId, expenseModel.expenseId]);

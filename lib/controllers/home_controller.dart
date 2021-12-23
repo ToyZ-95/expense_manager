@@ -38,9 +38,21 @@ class HomeController extends GetxController {
   void removeMonthsCard(BudgetModel monthsCardModel) =>
       budgetsModels.remove(monthsCardModel);
 
-  void deleteExpense(ExpenseModel expenseModel) {
-    expensesMap[expenseModel.monthId]!.remove(expenseModel);
-    DBProvider.db.deleteExpense(expenseModel);
+  void deleteExpense(ExpenseModel expenseModel, {wholeDay = false}) {
+    if (!wholeDay) {
+      expensesMap[expenseModel.monthId]!.remove(expenseModel);
+    } else {
+      List<ExpenseModel> dayExpenses = expensesMap[expenseModel.monthId]!
+          .where((element) =>
+              DateTime.parse(element.timeStamp!).day ==
+              DateTime.parse(expenseModel.timeStamp!).day)
+          .toList();
+
+      for (ExpenseModel item in dayExpenses) {
+        expensesMap[expenseModel.monthId]!.remove(item);
+      }
+    }
+    DBProvider.db.deleteExpense(expenseModel, wholeDay: wholeDay);
     budgetsModels.refresh();
     expensesMap.refresh();
     update(['expenseListId']);
